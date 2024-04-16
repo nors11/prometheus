@@ -1,0 +1,128 @@
+<div class="row">
+   <div class="col-12 col-lg-3">
+
+   </div>
+   <div class="col-12 col-lg-6">
+
+      <form #productNgForm="ngForm" [formGroup]="productForm"
+         (ngSubmit)="productNgForm.form.valid && submitProductForm()">
+         <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 mt-4">
+
+            <div class="row border-bottom w-100 pt-3 pb-3 settings-row">
+               <div class="col-12 col-lg-10">
+                  <p class="fs-10 fw-bolder ms-1 mt-2 mb-0" i18n>Datos del producto</p>
+               </div>
+               <div class="col-12 col-lg-2">
+                  <button type="button" class="btn btn-primary float-end" *ngIf="editProduct === false"
+                     (click)="updateProduct()" i18n>Editar</button>
+                  <button type="submit" class="btn btn-primary float-end" *ngIf="editProduct === true" i18n>Guardar</button>
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Tipo de producto</label>
+               <div class="col-sm-6">
+                <select class="form-select" aria-label="Default select example" formControlName="type">
+                     <option value="null" i18n>Seleccione...</option>
+                     <option value="cross" i18n>Cruz</option>
+                  </select>
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Nombre</label>
+               <div class="col-sm-6">
+                  <input type="text" class="form-control" formControlName="name">
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Matricula</label>
+               <div class="col-sm-6">
+                  <input type="text" class="form-control" formControlName="number_plate">
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Modelo</label>
+               <div class="col-sm-6">
+                  <!-- List models -->
+
+               <select class="form-select" aria-label="Default select example" formControlName="model">
+                  <option value="null" i18n>Seleccione...</option>
+                  <option *ngFor="let productModel of productModels" [value]="productModel._id">{{ productModel.name }}</option>
+               </select>
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticLanguage" class="col-sm-3 col-form-label" i18n>Idioma</label>
+               <div class="col-sm-6">
+                  <!-- List models -->
+
+               <select class="form-select" aria-label="Default select example" formControlName="language">
+                  <option value="null" i18n>Seleccione...</option>
+                  <option *ngFor="let l of language | keyvalue; let i = index;" value="{{l.value}}" i18n>{{l.value | languageAbbreviation}}</option>
+               </select>
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Conectividad</label>
+               <div class="col-sm-6">
+                  <input class="form-check-input" type="checkbox" id="connectivity" (change)="toggleWifi($event.target.checked)" formControlName="connectivity">
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>SSID WiFi</label>
+               <div class="col-sm-6">
+                  <input type="text" class="form-control" formControlName="wifiSSID">
+               </div>
+            </div>
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Contraseña</label>
+               <div class="col-sm-6">
+                  <input type="password" class="form-control" formControlName="password">
+               </div>
+            </div>
+         </div>
+      </form>
+
+      <form #contractNgForm="ngForm" [formGroup]="contractForm"
+         (ngSubmit)="contractNgForm.form.valid && submitContractForm()">
+         <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 mt-4">
+            <div class="row border-bottom w-100 pt-3 pb-3 settings-row">
+               <div class="col-10">
+                  <p class="fs-10 fw-bolder ms-1 mt-2 mb-0" i18n>Datos del contrato</p>
+               </div>
+               <div class="col-2">
+                  <button type="button" class="btn btn-primary float-end" *ngIf="editContract === false"
+                     (click)="updateContract()" i18n>Editar</button>
+                  <button type="submit" class="btn btn-primary float-end" *ngIf="editContract === true" i18n>Guardar</button>
+               </div>
+            </div>
+
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Contratado por</label>
+               <div class="col-sm-6">
+                  <!-- List contracts -->
+                  <select class="form-select" aria-label="Default select example" formControlName="id_pharmacy">
+                     <option value="null" i18n>Seleccione...</option>
+                     <option *ngFor="let pharmacy of pharmacies" [value]="pharmacy._id">{{pharmacy.name}}</option>
+                  </select>
+               </div>
+            </div>
+
+            <div class="row pt-3 pb-3 border-bottom settings-row">
+               <label for="staticEmail" class="col-sm-3 col-form-label" i18n>Tipo de contrato</label>
+               <div class="col-sm-6">
+                  <!-- List contracts -->
+                  <select class="form-select" aria-label="Default select example" formControlName="contract">
+                     <option value="null" i18n>Seleccione...</option>
+                     <option value="full" i18n>Full</option>
+                     <option value="limited" i18n>Limitado</option>
+                  </select>
+               </div>
+            </div>
+         </div>
+      </form>
+
+   </div>
+   <div class="col-3">
+   </div>
+
+</div>

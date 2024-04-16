@@ -1,0 +1,147 @@
+<tecneplas-toasts aria-live="polite" aria-atomic="true"></tecneplas-toasts>
+
+<!-- 
+    TODO: aquest header es perquè aparegui un menú d'hamurguesa quan el navegador es fa petit
+    Web de referència: https://getbootstrap.com/docs/5.0/examples/dashboard/
+-->
+<header class="navbar navbar-dark sticky-top bg-dark flex-sm-nowrap p-0 pt-4 pb-4 p-sm-0 shadow">
+    <button class="navbar-toggler position-absolute collapsed ms-3 mt-3 mb-3" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+</header>
+
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-sm-3 col-lg-2 min-vh-100 p-sm-0 d-sm-block sidebar collapse bg-white" id="sidebarMenu">
+            
+            <div class="d-flex pt-4 pb-0 pb-sm-4 m-auto">
+                <a class="navbar-brand m-auto" [routerLink]="['/products']">
+                    <img class="m-auto" src="assets/img/tecneplas-brand.svg" width="160">
+                </a>
+            </div>
+            
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link p-0" aria-current="page" [routerLink]="['/pharmacies']" routerLinkActive="tecneplas-current-page">
+                            <div class="pt-3 pb-3 ms-5">
+                                <svg class="m-auto" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="tecneplas-menu-img" fill-rule="evenodd" clip-rule="evenodd" d="M8.58064 14H14V3.3871C14 2.96788 13.8335 2.56584 13.537 2.26941C13.2406 1.97298 12.8386 1.80645 12.4194 1.80645H8.58064V1.58065C8.58064 1.16143 8.41411 0.759389 8.11769 0.46296C7.82126 0.166532 7.41921 0 7 0H1.58065C1.16143 0 0.759389 0.166532 0.46296 0.46296C0.166532 0.759389 0 1.16143 0 1.58065V14H8.58064ZM8.58064 6.77419H12.6452V9.03226H8.58064V6.77419ZM8.58064 12.6452V10.3871H12.6452V12.6452H8.58064ZM12.4194 3.16129C12.4792 3.16129 12.5367 3.18508 12.579 3.22743C12.6214 3.26977 12.6452 3.32721 12.6452 3.3871V5.41935H8.58064V3.16129H12.4194ZM4.96774 12.6452V11.0645H3.6129V12.6452H1.35484V1.58065C1.35484 1.52076 1.37863 1.46332 1.42098 1.42098C1.46332 1.37863 1.52076 1.35484 1.58065 1.35484H7C7.05989 1.35484 7.11732 1.37863 7.15967 1.42098C7.20202 1.46332 7.22581 1.52076 7.22581 1.58065V12.6452H4.96774ZM4.96775 3.61291H3.61291V4.96775H4.96775V3.61291ZM3.61291 7.22581H4.96775V8.58065H3.61291V7.22581Z"/>
+                                </svg>
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Farmacias</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-0" [routerLink]="['/products']" routerLinkActive="tecneplas-current-page">
+                            <div class="pt-3 pb-3 ms-5">
+                                <svg class="m-auto" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="tecneplas-menu-img" d="M0 12.4194C0 12.8386 0.166532 13.2406 0.46296 13.537C0.759389 13.8335 1.16143 14 1.58065 14H12.4194C12.8386 14 13.2406 13.8335 13.537 13.537C13.8335 13.2406 14 12.8386 14 12.4194V7.90323C14 7.48401 13.8335 7.08197 13.537 6.78554C13.2406 6.48911 12.8386 6.32258 12.4194 6.32258H10.8206C10.8321 6.24784 10.8381 6.17238 10.8387 6.09677V1.58065C10.8387 1.16143 10.6722 0.759389 10.3757 0.46296C10.0793 0.166532 9.67728 0 9.25806 0H4.74194C4.32272 0 3.92068 0.166532 3.62425 0.46296C3.32782 0.759389 3.16129 1.16143 3.16129 1.58065V6.09677C3.1619 6.17238 3.16794 6.24784 3.17936 6.32258H1.58065C1.16143 6.32258 0.759389 6.48911 0.46296 6.78554C0.166532 7.08197 0 7.48401 0 7.90323V12.4194ZM12.6452 7.90323V12.4194C12.6452 12.4792 12.6214 12.5367 12.579 12.579C12.5367 12.6214 12.4792 12.6452 12.4194 12.6452H7.67742V7.67742H9.48387V9.70968H10.8387V7.67742H12.4194C12.4792 7.67742 12.5367 7.70121 12.579 7.74356C12.6214 7.7859 12.6452 7.84334 12.6452 7.90323ZM4.51613 6.09677V1.58065C4.51613 1.52076 4.53992 1.46332 4.58227 1.42098C4.62461 1.37863 4.68205 1.35484 4.74194 1.35484H6.32258V3.3871H7.67742V1.35484H9.25806C9.31795 1.35484 9.37539 1.37863 9.41773 1.42098C9.46008 1.46332 9.48387 1.52076 9.48387 1.58065V6.09677C9.48387 6.15666 9.46008 6.2141 9.41773 6.25644C9.37539 6.29879 9.31795 6.32258 9.25806 6.32258H4.74194C4.68205 6.32258 4.62461 6.29879 4.58227 6.25644C4.53992 6.2141 4.51613 6.15666 4.51613 6.09677ZM1.35484 7.90323C1.35484 7.84334 1.37863 7.7859 1.42098 7.74356C1.46332 7.70121 1.52076 7.67742 1.58065 7.67742H3.16129V9.70968H4.51613V7.67742H6.32258V12.6452H1.58065C1.52076 12.6452 1.46332 12.6214 1.42098 12.579C1.37863 12.5367 1.35484 12.4792 1.35484 12.4194V7.90323Z"/>
+                                </svg>
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Productos</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="currentAccount.role == userRole.admin">
+                        <a class="nav-link p-0" [routerLink]="['/distributors']" routerLinkActive="tecneplas-current-page">
+                            <div class="pt-3 pb-3 ms-5">
+                                <svg class="m-auto" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="tecneplas-menu-img" d="M12.2117 8.59413C12.3685 7.13813 11.9056 5.6672 10.9163 4.55467C10.5541 4.14773 10.1397 3.81173 9.688 3.54293C9.7552 3.304 9.8 3.0576 9.8 2.8C9.8 1.2544 8.5456 0 7 0C5.4544 0 4.2 1.2544 4.2 2.8C4.2 3.06133 4.24853 3.31147 4.31573 3.55413C4.032 3.72213 3.75947 3.9088 3.5056 4.13653C2.23253 5.27147 1.6016 6.93653 1.77707 8.6016C0.7392 9.01227 0 10.0203 0 11.2C0 12.7456 1.2544 14 2.8 14C3.69973 14 4.4912 13.5669 5.00267 12.9061C5.64107 13.1675 6.32053 13.2981 6.99627 13.2981C7.67573 13.2981 8.3552 13.1675 8.9936 12.9061C9.50507 13.5669 10.3003 14 11.2 14C12.7456 14 14 12.7456 14 11.2C14 10.0128 13.2533 9.00107 12.2117 8.59413ZM7 1.4C7.7728 1.4 8.4 2.0272 8.4 2.8C8.4 3.5728 7.7728 4.2 7 4.2C6.2272 4.2 5.6 3.5728 5.6 2.8C5.6 2.0272 6.2272 1.4 7 1.4ZM2.8 12.6C2.0272 12.6 1.4 11.9728 1.4 11.2C1.4 10.4272 2.0272 9.8 2.8 9.8C3.5728 9.8 4.2 10.4272 4.2 11.2C4.2 11.9728 3.5728 12.6 2.8 12.6ZM8.4 11.2C8.4 11.3419 8.4224 11.48 8.44107 11.6181C7.52267 11.9915 6.48107 11.9915 5.5552 11.6219C5.5776 11.4837 5.59627 11.3456 5.59627 11.2C5.59627 9.78133 4.53227 8.62027 3.16213 8.43733C3.03893 7.22027 3.5056 6.01067 4.4352 5.18187C4.6144 5.02133 4.80853 4.88693 5.0064 4.76747C5.51413 5.28267 6.21973 5.60373 6.99627 5.60373C7.77653 5.60373 8.48213 5.27893 8.98987 4.76373C9.31093 4.95787 9.60213 5.20053 9.86347 5.49173C10.5877 6.3056 10.9275 7.3808 10.8155 8.4448C9.45653 8.62773 8.4 9.78507 8.4 11.2ZM11.2 12.6C10.4272 12.6 9.8 11.9728 9.8 11.2C9.8 10.4272 10.4272 9.8 11.2 9.8C11.9728 9.8 12.6 10.4272 12.6 11.2C12.6 11.9728 11.9728 12.6 11.2 12.6Z" fill="#2C2A86"/>
+                                </svg>
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Distribuidores</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="currentAccount.role == userRole.admin">
+                        <a class="nav-link p-0" [routerLink]="['/users']" routerLinkActive="tecneplas-current-page">
+                            <div class="pt-3 pb-3 ms-5">
+                                <svg class="m-auto" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path class="tecneplas-menu-img" d="M7 0C5.61553 0 4.26215 0.410543 3.11101 1.17971C1.95987 1.94888 1.06266 3.04213 0.532846 4.32121C0.00303299 5.6003 -0.13559 7.00776 0.134506 8.36563C0.404603 9.7235 1.07129 10.9708 2.05026 11.9497C3.02922 12.9287 4.2765 13.5954 5.63437 13.8655C6.99224 14.1356 8.3997 13.997 9.67878 13.4672C10.9579 12.9373 12.0511 12.0401 12.8203 10.889C13.5895 9.73784 14 8.38447 14 7C14 6.08075 13.8189 5.17049 13.4672 4.32121C13.1154 3.47194 12.5998 2.70026 11.9497 2.05025C11.2997 1.40024 10.5281 0.884626 9.67878 0.532843C8.82951 0.18106 7.91925 0 7 0V0ZM4.2 11.844V11.2C4.2 11.0143 4.27375 10.8363 4.40503 10.705C4.5363 10.5737 4.71435 10.5 4.9 10.5H9.1C9.28565 10.5 9.4637 10.5737 9.59498 10.705C9.72625 10.8363 9.8 11.0143 9.8 11.2V11.844C8.94987 12.339 7.98372 12.5997 7 12.5997C6.01628 12.5997 5.05014 12.339 4.2 11.844V11.844ZM11.151 10.745C11.0474 10.2783 10.7877 9.86091 10.4148 9.56181C10.0419 9.26271 9.57805 9.0998 9.1 9.1H4.9C4.42195 9.0998 3.95814 9.26271 3.58521 9.56181C3.21229 9.86091 2.95258 10.2783 2.849 10.745C2.12142 9.94151 1.64266 8.94413 1.47082 7.87387C1.29898 6.80362 1.44145 5.7065 1.88093 4.71563C2.32042 3.72475 3.03803 2.88273 3.9467 2.29172C4.85537 1.70071 5.91604 1.38612 7 1.38612C8.08396 1.38612 9.14463 1.70071 10.0533 2.29172C10.962 2.88273 11.6796 3.72475 12.1191 4.71563C12.5586 5.7065 12.701 6.80362 12.5292 7.87387C12.3573 8.94413 11.8786 9.94151 11.151 10.745V10.745Z" fill="#2C2A86"/>
+                                    <path d="M6.99995 2.79999C6.44616 2.79999 5.90481 2.9642 5.44436 3.27187C4.9839 3.57954 4.62501 4.01684 4.41309 4.52847C4.20116 5.04011 4.14572 5.60309 4.25375 6.14624C4.36179 6.68939 4.62847 7.1883 5.02005 7.57989C5.41164 7.97147 5.91055 8.23815 6.4537 8.34619C6.99685 8.45422 7.55983 8.39877 8.07147 8.18685C8.5831 7.97492 9.0204 7.61604 9.32807 7.15558C9.63573 6.69513 9.79995 6.15377 9.79995 5.59999C9.79995 4.85738 9.50495 4.14519 8.97985 3.62009C8.45475 3.09499 7.74256 2.79999 6.99995 2.79999ZM6.99995 6.99999C6.72306 6.99999 6.45238 6.91788 6.22215 6.76404C5.99193 6.61021 5.81248 6.39156 5.70652 6.13574C5.60056 5.87993 5.57283 5.59843 5.62685 5.32686C5.68087 5.05529 5.81421 4.80583 6.01 4.61004C6.2058 4.41424 6.45525 4.28091 6.72683 4.22689C6.9984 4.17287 7.27989 4.20059 7.53571 4.30656C7.79153 4.41252 8.01018 4.59196 8.16401 4.82219C8.31784 5.05242 8.39995 5.32309 8.39995 5.59999C8.39995 5.97129 8.25245 6.32739 7.9899 6.58994C7.72735 6.85249 7.37126 6.99999 6.99995 6.99999Z" fill="#2C2A86"/>
+                                </svg>
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Usuarios</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="currentAccount.role == userRole.admin || currentAccount.role == userRole.distributor">
+                        <a class="nav-link p-0" [routerLink]="['/errors']" routerLinkActive="tecneplas-current-page">
+                            <div class="pt-3 pb-3 ms-5">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#2C2A86" class="bi bi-exclamation-circle m-auto" viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                                    <path d="M7.002 11a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 4.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 4.995z"/>
+                                </svg>
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Alertas</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="currentAccount.role == userRole.admin">
+                        <ul class="list-unstyled">
+                            <li class="mb-1">
+                                <a class="nav-link p-0 cursor-pointer" href="#admin-collapse" role="button" data-bs-toggle="collapse" data-bs-target="#admin-collapse" aria-expanded="true" aria-controls="admin-collapse">
+                                    <div class="pt-3 pb-3 ms-5">
+                                        <i class="bi bi-gear tecneplas-menu-img"></i>
+                                        <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Administración</span>
+                                    </div>
+                                </a>
+                                <div class="collapse show" id="admin-collapse">
+                                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                                        <li>
+                                            <a class="nav-link p-0 ps-3" [routerLink]="['/product-models']" routerLinkActive="tecneplas-current-page">
+                                                <div class="pt-3 pb-3 ms-5">
+                                                    <svg class="m-auto" width="14" height="13" viewBox="0 0 14 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                                        <path class="tecneplas-menu-img" fill-rule="evenodd" clip-rule="evenodd" d="M4.73469 0C4.30122 0 3.87539 0.114098 3.5 0.33083C3.12463 0.547548 2.81288 0.859319 2.59615 1.23468L0.330832 5.15734C0.1141 5.53273 0 5.95856 0 6.39202C0 6.82549 0.114139 7.25138 0.330871 7.62677L2.59619 11.5494C2.81292 11.9248 3.12463 12.2365 3.5 12.4532C3.87539 12.67 4.30122 12.784 4.73469 12.784H9.26532C9.69878 12.784 10.1246 12.67 10.5 12.4532C10.8754 12.2365 11.1871 11.9248 11.4039 11.5494L13.6692 7.6267C13.8859 7.25131 14 6.82549 14 6.39202C14 5.95856 13.8859 5.53267 13.6691 5.15727L11.4039 1.23468C11.1871 0.85929 10.8754 0.547562 10.5 0.33083C10.1246 0.114098 9.69878 0 9.26532 0H4.73469ZM4.22873 1.59303C4.38256 1.50422 4.55706 1.45746 4.73468 1.45746H9.26532C9.44295 1.45746 9.61744 1.50422 9.77127 1.59303C9.9251 1.68184 10.0529 1.80965 10.1417 1.96348L12.407 5.88608C12.4958 6.0399 12.5425 6.2144 12.5425 6.39202C12.5425 6.56965 12.4958 6.74415 12.407 6.89797L10.1417 10.8206C10.0528 10.9745 9.9251 11.1022 9.77127 11.191C9.61744 11.2798 9.44295 11.3266 9.26532 11.3266H4.73468C4.55705 11.3266 4.38256 11.2798 4.22873 11.191C4.0749 11.1022 3.94712 10.9744 3.85831 10.8206L1.59299 6.8979C1.50421 6.74409 1.45746 6.56962 1.45746 6.39202C1.45746 6.21443 1.50425 6.03989 1.59303 5.88608L3.85835 1.96341C3.94716 1.80959 4.0749 1.68185 4.22873 1.59303ZM5.9881 6.39199C5.9881 5.83314 6.44114 5.38009 7 5.38009C7.55885 5.38009 8.01189 5.83314 8.01189 6.39199C8.01189 6.95085 7.55885 7.40389 7 7.40389C6.44114 7.40389 5.9881 6.95085 5.9881 6.39199ZM7 3.92263C5.63621 3.92263 4.53063 5.0282 4.53063 6.39199C4.53063 7.75578 5.63621 8.86135 7 8.86135C8.36379 8.86135 9.46936 7.75578 9.46936 6.39199C9.46936 5.0282 8.36379 3.92263 7 3.92263Z" fill="#6B7394"/>
+                                                    </svg>
+                                                    <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Modelos</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a class="nav-link p-0 ps-3" [routerLink]="['/animations']" routerLinkActive="tecneplas-current-page">
+                                                <div class="pt-3 pb-3 ms-5">
+                                                    <i class="bi bi-film tecneplas-menu-img"></i>
+                                                    <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Animaciones</span>
+                                                </div>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </li>
+                          </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="position-absolute bottom-0 w-100 pb-5">
+                <div class="btn-group dropup">
+                    <a data-bs-toggle="dropdown" aria-expanded="false">
+                        <div class="row ms-4 cursor-pointer"> 
+                            <div class="col-3">
+                                <div class="circle">
+                                    <span class="m-auto">{{currentAccount.name[0]}}{{currentAccount.surname[0]}}</span>
+                                </div>
+                            </div>
+                            <div class="col-9">
+                                <span class="text-primary fw-bold p-0 h-auto">{{currentAccount.name}} {{currentAccount.surname}}</span> <br>
+                                <span class="text-secondary fs-12 lh-1" *ngIf="currentAccount.role == 'pharmacy'" i18n>Farmacia</span>
+                                <span class="text-secondary fs-12 lh-1" *ngIf="currentAccount.role == 'distributor'" i18n>Distribuidor</span>
+                                <span class="text-secondary fs-12 lh-1" *ngIf="currentAccount.role == 'admin'" i18n>Administrador</span>
+                            </div>
+                        </div>
+                    </a>
+                    <ul class="dropdown-menu ms-4" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="#" i18n>Editar</a></li>
+                        <li><a class="dropdown-item" href="#" i18n>Ajustes</a></li>
+                        <li><a class="dropdown-item" href="#" (click)="logout()" i18n>Logout</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="position-absolute bottom-0 w-100 pb-2 ps-2"><div style="padding-left: 30px;">V {{currentApplicationVersion}}</div></div>
+        </nav>
+        <main class="col-sm-9 ms-sm-auto col-lg-10">
+            <router-outlet></router-outlet>
+        </main>
+    </div>
+</div>
+
+<script>
+
+</script>

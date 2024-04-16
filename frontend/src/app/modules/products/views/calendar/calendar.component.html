@@ -1,0 +1,158 @@
+<div class="row">
+    <div class="col-12 col-lg-10 col-md-10	col-lg-10 col-xl-10 col-xxl-10 pt-3 mb-4">
+        <full-calendar class="pe-4" #crossCalendar [options]="calendarOptions" deepChangeDetection="true">
+        </full-calendar>
+    </div>
+    <div class="col-12 col-lg-2 col-md-2 col-lg-2 col-xl-2 col-xxl-2 p-4 pt-3 bg-white">
+        <div class="row mb-2">
+            <div class="col-12 col-lg-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12">
+                <h6 class="pb-3 fs-10 fw-bold" i18n>Tus secuencias ({{totalSequences}})</h6>
+            </div>
+        </div>
+        <div class="row mb-2" *ngFor="let sequence of sequences">
+            <div class="col-12 col-lg-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 pb-1">
+                <span class="fs-12 fw-bold" i18n>{{ sequence.name }}</span>
+            </div>
+            <div class="col-12 col-lg-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12"
+                *ngFor="let sequence_item of sequence.list">
+                <div class="bullet-point mt-2 me-2"
+                    [ngClass]="{'bg-daily-bullet-point': sequence.category === 'daily', 'bg-holiday-bullet-point' : sequence.category === 'holiday', 'bg-on_guard-bullet-point' : sequence.category === 'on_guard' }">
+                </div><span class="fs-11 fw-regular text-secondary" i18n>{{ sequence_item.name }}</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- start: Modal for adding new sequence to a date or muliple dates -->
+<ng-template #addCrossCalendarModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Añadir secuencia</h6>
+    </div>
+    <form [formGroup]="crossCalendarForm" (submit)="submitFormAddCrossCalendar()">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-12 col-lg-6 col-md-6 col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <label for="formCategory" class="form-label" i18n>Elige tu secuencia</label>
+                    <select class="form-select" formControlName="id_sequence" formControlName="id_sequence">
+                        <option value="" i18n>Seleccionar secuencia...</option>
+                        <optgroup label="{{ sequence.name }}" *ngFor="let sequence of sequences">
+                            <option *ngFor="let sequence_item of sequence.list" [value]="sequence_item._id">{{
+                                sequence_item.name }}</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                    <label for="formDate" class="form-label" i18n>Elegir fechas concretas</label>
+                    <ngb-datepicker #periodicity (dateSelect)="onDateSelection($event)" [displayMonths]="2"
+                        [startDate]="startDate" [dayTemplate]="customDay" outsideDays="hidden"></ngb-datepicker>
+                    <ng-template #customDay let-date let-focused="focused">
+                        <span
+                            [ngClass]="{ 'bg-daily text-white rounded' : isDateSelected(date), 'ps-2 pe-2 pt-1 pb-1 p-1': date.day.toString().length == 1, 'p-1':  date.day.toString().length == 2}">
+                            {{ date.day }}
+                        </span>
+                    </ng-template>
+                </div>
+                <div class="col-12 col-lg-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3"
+                    *ngIf="crossCalendarForm.get('dates').value.length > 0">
+                    <label class="form-label" i18n>Fechas seleccionadas:</label><br>
+                    <span *ngFor="let date_start of crossCalendarForm.get('dates').value; let last = last">{{ date_start
+                        | date:'d/M/Y' }}<span *ngIf="!last">, </span></span>
+                </div>
+            </div>
+            <hr>
+            <div class="row align-items-center">
+                <div class="col-12 col-lg-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formAllDay" formControlName="all_day" (change)="toggleAllDay($event.target.checked)">
+                        <label class="form-check-label" for="formAllDay" i18n>Todo el día</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-lg-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <label for="formTimeStart" class="form-label" i18n>De</label>
+                    <input type="time" (ngModelChange)="valuechange($event)" class="form-control" id="formTimeStart" formControlName="time_start">
+                </div>
+                <div class="col-12 col-lg-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <label for="formTimeEnd" class="form-label" i18n>A</label>
+                    <input type="time" step="120" class="form-control" id="formTimeEnd" formControlName="time_end">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer bg-body">
+            <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')"
+                i18n>Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!crossCalendarForm.valid" i18n>Guardar
+                cambios</button>
+        </div>
+    </form>
+</ng-template>
+<!-- end: Modal for adding new sequence to a date or muliple dates -->
+
+
+<!-- start: Modal for editing a sequence for an specific date -->
+<ng-template #editCrossCalendarModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Editar secuencia</h6>
+    </div>
+    <form [formGroup]="crossCalendarForm" (submit)="submitFormEditCrossCalendar()">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <label for="formCategory" class="form-label" i18n>Elige tu secuencia</label>
+                    <select class="form-select" formControlName="id_sequence" formControlName="id_sequence">
+                        <option value="" i18n>Seleccionar secuencia...</option>
+                        <optgroup label="{{ sequence.name }}" *ngFor="let sequence of sequences">
+                            <option *ngFor="let sequence_item of sequence.list" [value]="sequence_item._id">{{
+                                sequence_item.name }}</option>
+                        </optgroup>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                    <label for="formDate" class="form-label" i18n>Elegir fecha concreta</label><br>
+                    <ngb-datepicker #periodicity [dayTemplate]="customDay" [startDate]="startDate" outsideDays="hidden" [displayMonths]="2"
+                    formControlName="date_start"></ngb-datepicker>
+                
+                    <ng-template #customDay let-date let-focused="focused">
+                        <span
+                            [ngClass]="{ 'bg-daily text-white rounded' : isDateSelected(date), 'ps-2 pe-2 pt-1 pb-1 p-1': date.day.toString().length == 1, 'p-1':  date.day.toString().length == 2}">
+                            {{ date.day }}
+                        </span>
+                    </ng-template>
+                </div>
+            </div>
+            <hr>
+            <div class="row align-items-center">
+                <div class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formAllDay" formControlName="all_day" (change)="toggleAllDay($event.target.checked)">
+                        <label class="form-check-label" for="formAllDay" i18n>Todo el día</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <label for="formTimeStart" class="form-label" i18n>De</label>
+                    <input type="time" class="form-control" id="formTimeStart" formControlName="time_start" (ngModelChange)="valuechange($event)" >
+                </div>
+                <div class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                    <label for="formTimeEnd" class="form-label" i18n>A</label>
+                    <input type="time" step="120" class="form-control" id="formTimeEnd" formControlName="time_end">
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer bg-body">
+            <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')"
+                i18n>Cancelar</button>
+            <button type="submit" class="btn btn-primary" [disabled]="!crossCalendarForm.valid" i18n>Guardar
+                cambios</button>
+            <button type="button" class="btn btn-danger" (click)="deleteCalendarSequence()" i18n>Eliminar</button>
+        </div>
+    </form>
+</ng-template>
+<!-- end: Modal for editing a sequence for an specific date -->

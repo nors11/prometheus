@@ -1,0 +1,29 @@
+<div class="pt-4 pb-4">
+    <div class="pr-5 pl-5 ml-3 mr-3">
+        <form class="tecneplas-login-form" #loginForm="ngForm" [formGroup]="formGroup" (ngSubmit)="loginForm.form.valid && submitForm()" autocomplete="off">
+            <div class="text-center">
+                <img class="mb-5" src="assets/img/logo.svg">
+                <h5 i18n>Iniciar sesión</h5>
+            </div>
+            <div *ngIf="errors">
+                <div class="alert alert-danger" *ngIf="errors" role="alert">
+                    {{errors.message}}
+                </div>
+            </div>
+            <div *ngIf="resetPasssword" class="alert alert-success mt-2" role="alert">
+                {{resetPasssword}}
+            </div>
+            <div class="mt-4 mb-4 text-left form-group">
+                <label class="text-secondary fw-bold fs-11 lh-2" i18n>Email</label>
+                <input type="email" formControlName="email" id="inputEmail" class="form-control" required autofocus>
+            </div>
+
+            <div class="text-left mb-4">
+                <label class="text-secondary fw-bold fs-11 lh-2" i18n>Contraseña</label>
+                <input type="password" formControlName="pass" id="inputPassword" class="form-control" required>
+            </div>
+            <p class="fs-10"><i class="bi bi-lock "></i><a class="text-secondary" [routerLink]="['/account/request-reset-password']" i18n>He olvidado mi contraseña</a></p>
+            <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Entrar</button>
+        </form>
+    </div>
+</div>

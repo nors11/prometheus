@@ -1,0 +1,381 @@
+<div class="row bg-white">
+    <div class="col-12">
+        <form [formGroup]="sequenceForm">
+            <div class="row bg-white  mb-2 ps-5 pe-5 top-bar">
+                <div class="col-8 col-sm-8 col-md-8	col-lg-8 col-xl-8 col-xxl-8 d-flex pt-1 pb-1 ps-3">
+                    <a class="text-primary float-start my-auto cursor-pointer" (click)="goBack()">
+                        <i class="bi bi-arrow-left-circle fs-1"></i>
+                    </a>
+                    <h1 class="fs-10 fw-bold m-0 p-0 float-start ps-2">{{ sequence?.name }}</h1>  
+                </div>
+                <div class="col-4 col-sm-4 col-md-4	col-lg-4 col-xl-4 col-xxl-4 text-end my-auto top-bar">
+                    <button type="button" class="btn btn-primary" (click)="submitFormSequence()" i18n [disabled]="sequenceForm?.get('actions')?.length <= 0">Actualizar</button>
+                </div>
+            </div>
+            <div class="row bg-body pt-2 ps-2">
+                <div class="col-12 col-sm-12 col-md-9 col-lg-10 ps-5 pe-5">
+                    <div class="row mb-4">
+                        <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-8 col-xxl-8">
+                            <h4 class="fs-10 fw-bold" i18n>Acciones de la secuencia ({{ sequenceForm?.get('actions')?.length }})</h4>
+                        </div>
+                        <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-4 col-xxl-4 text-lg-end mt-2">
+                            <button type="button" class="btn btn-primary me-2" (click)="openSequenceSimulatorModal(sequenceSimulatorModal)" [disabled]="sequenceForm?.get('actions')?.length == 0">Simular secuencia</button>
+                            <button type="button" class="btn btn-outline-primary" (click)="openAddActionModal(addActionModal)">
+                                <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z" fill="#2C2A86"/>
+                                </svg>
+                                <span i18n>Añadir acción</span>
+                            </button>
+                        </div>
+                        <hr>
+                    </div>
+                    <div cdkDropList (cdkDropListDropped)="drop($event)">
+                        <div cdkDrag [cdkDragData]="action" *ngFor="let action of sequenceForm.get('actions')['controls']; let i = index;" formArrayName="actions">
+                            <div class="row mt-2 mb-2 ps-1 pe-3" [formGroupName]="i">
+                                <div class="col-1 col-sm-1 col-md-1	col-lg-1 col-xl-1 col-xxl-1 my-auto">
+                                    <div class="circle bg-enum mt-0 mx-auto">
+                                        <span class="m-auto fs-12 fw-bold text-info">{{ i+1 }}</span>
+                                    </div>
+                                </div>
+                                <div class="col-11 col-sm-11 col-md-11 col-lg-11 col-xl-11 col-xxl-11 bg-white shadow-lg rounded">
+                                    <div class="accordion-item" style="border: none" (mouseenter)="preventAccordion(i, action.value.type)" (mouseleave)="activeAccordion(i)">
+                                        <h2 class="accordion-header" id="panelsStayOpen-heading{{i}}">
+                                        <button id="accordion_{{i}}" class="accordion-button p-0" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#panelsStayOpen-collapse' + i" aria-expanded="false" [attr.aria-controls]="'panelsStayOpen-collapse' + i">
+                                            <div class="col-6 col-sm-8 col-md-8 col-lg-10 col-xl-10 col-xxl-10 my-auto">
+                                                <i class="bi bi-grip-vertical me-2 text-primary fs-10"></i>
+                                                <span *ngIf="action.value.type" class="my-auto ps-2 fs-11 fw-bold">{{ action.value.type | typeAbbreviation }}</span><!--getActionTypeName(action.value.type)-->
+                                                <span *ngIf="action.value.parameters.message" class="my-auto ps-4 fs-11 text-secondary">"{{ action.value.parameters.message }}"</span>
+                                            </div>
+                                            <div class="col-6 col-sm-4 col-md-4	col-lg-2 col-xl-2 col-xxl-2 text-end me-3">
+                                                <button type="button" class="btn btn-primary me-2 text-end" (mouseenter)="preventAccordion(i)" (mouseleave)="activeAccordion(i)" (click)="$event.preventDefault();openEditActionModal(editActionModal, i)" [disabled]="checkActionAvailability(action.value.type)" i18n>Editar</button>
+                                                <div class="btn-group dropdown">
+                                                    <a data-bs-toggle="dropdown" aria-expanded="false" (mouseenter)="preventAccordion(i)" (mouseleave)="activeAccordion(i)">
+                                                        <div class="btn btn-outline-primary float-end"><i class="bi bi-three-dots-vertical"></i></div>
+                                                    </a>
+                                                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                                        <li *ngIf="!checkActionAvailability(action.value.type)"><button class="dropdown-item cursor-pointer" (mouseenter)="preventAccordion(i)" (mouseleave)="activeAccordion(i)" (click)="duplicateAction(i)" i18n>Duplicar</button></li>
+                                                        <li><button class="dropdown-item cursor-pointer" (mouseenter)="preventAccordion(i)" (mouseleave)="activeAccordion(i)" (click)="deleteAction(i)" i18n>Eliminar</button></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </button>
+                                        </h2>
+                                        <div id="panelsStayOpen-collapse{{i}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'panelsStayOpen-heading' + i">
+                                            <div class="accordion-body pt-0 pb-4">
+                                                <p *ngIf="action.value.parameters.message" class="my-auto ps-4 fs-11 text-secondary" i18n>Texto: {{ action.value.parameters.message }}</p>
+                                                <p *ngIf="action.value.parameters.top_drawing" class="my-auto ps-4 fs-11 text-secondary" i18n>Dibujo superior: {{ findOption(action.value.type, 'top_drawing', action.value.parameters.top_drawing) }}</p>
+                                                <p *ngIf="action.value.parameters.bottom_drawing" class="my-auto ps-4 fs-11 text-secondary" i18n>Dibujo inferior: {{ findOption(action.value.type, 'bottom_drawing', action.value.parameters.bottom_drawing) }}</p>
+                                                <p *ngIf="action.value.parameters.effect" class="my-auto ps-4 fs-11 text-secondary" i18n>Efecto: {{ findOption(action.value.type, 'effect', action.value.parameters.effect) }}</p>
+                                                <p *ngIf="action.value.parameters.font_family" class="my-auto ps-4 fs-11 text-secondary" i18n>Tipografía: {{ findOption(action.value.type, 'font_family', action.value.parameters.font_family) }}</p>
+                                                <p *ngIf="action.value.parameters.font_size" class="my-auto ps-4 fs-11 text-secondary" i18n>Fuente: {{ findOption(action.value.type, 'font_size', action.value.parameters.font_size) }}</p>
+                                                <p *ngIf="action.value.parameters.row" class="my-auto ps-4 fs-11 text-secondary" i18n>Fila: {{ findOption(action.value.type, 'row', action.value.parameters.row) }}</p>
+                                                <p *ngIf="action.value.parameters.speed" class="my-auto ps-4 fs-11 text-secondary" i18n>Velocidad: {{ findOption(action.value.type, 'speed', action.value.parameters.speed) }}</p>
+                                                <p *ngIf="action.value.parameters.pause" class="my-auto ps-4 fs-11 text-secondary" i18n>Pausa: {{ findOption(action.value.type, 'pause', action.value.parameters.pause) }}</p>
+                                                <p *ngIf="action.value.parameters.delete_single_row" class="my-auto ps-4 fs-11 text-secondary" i18n>Antes borrar solo fila: {{ (action.value.parameters.delete_single_row == true) ? 'Activado' : 'Desactivado' }}</p>
+                                                <p *ngIf="action.value.parameters.delete_all" class="my-auto ps-4 fs-11 text-secondary" i18n>Antes borrar todo: {{ (action.value.parameters.delete_all == true) ? 'Activado' : 'Desactivado' }}</p>
+                                                <p *ngIf="action.value.parameters.text_in_out" class="my-auto ps-4 fs-11 text-secondary" i18n>El texto entra y sale: {{ (action.value.parameters.text_in_out == true) ? 'Activado' : 'Desactivado' }}</p>
+                                                <p *ngIf="action.value.parameters.text_only_in" class="my-auto ps-4 fs-11 text-secondary" i18n>El texto solo entra: {{ (action.value.parameters.text_only_in == true) ? 'Activado' : 'Desactivado' }}</p>
+                                                <p *ngIf="action.value.parameters.color" class="my-auto ps-4 fs-11 text-secondary" i18n>Color: {{ findOption(action.value.type, 'color', action.value.parameters.color) }}</p>
+                                                <p *ngIf="action.value.parameters.orla" class="my-auto ps-4 fs-11 text-secondary" i18n>Orla: {{ action.value.parameters.orla }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <nav class="col-12 col-sm-12 col-md-3 col-lg-2 min-vh-100 p-0 d-md-block right-sidebar collapse bg-white">
+                    <div class="position-sticky pt-3">
+
+                        <form [formGroup]="sequenceForm">
+                            <div class="modal-body ms-5 p-0 w-75">
+                                <div class="mb-3">
+                                    <label for="formName" class="form-label" i18n> <span class="text-secondary fw-bold fs-11">Nombre</span></label>
+                                    <input type="text" class="form-control fs-11" id="formName" placeholder="Ej.: Buenos días" formControlName="name">
+                                </div>
+                                <div class="mb-1">
+                                    <label for="formCategory" class="form-label" i18n><span class="text-secondary fw-bold fs-11">Tipo</span></label>
+                                    <select id="formCategory" [(ngModel)]="sequenceCategory" class="form-select fs-11" formControlName="category">
+                                        <option *ngFor="let category of categories" [value]="category.id" class="fs-11">{{ category.name }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </form> 
+                        <div class="ms-5 me-5 mb-3 mt-4">
+                            <span class="text-secondary fw-bold fs-11" i18n>Acciones</span>
+                        </div>
+                        <button class="ms-5 mb-2 btn btn-outline-primary p-0 w-75" (click)="duplicateSequence()">
+                            <div class="text-info my-auto text-left ps-3">
+                                <i class="bi bi-back"></i>
+                                <span class="fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Duplicar Secuencia</span>
+                            </div>
+                        </button>
+                        <button class="ms-5 btn btn-outline-primary p-0 w-75" (click)="deleteSequence()">
+                            <div class="text-danger my-auto text-left ps-3">
+                                <i class="bi bi-trash"></i>
+                                <span class="fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Eliminar Secuencia</span>
+                            </div>
+                        </button>
+                    </div>
+                </nav>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- start: Modal for adding new action -->
+<ng-template #addActionModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" i18n>Añadir acción</h4>
+    </div>
+    <form [formGroup]="actionForm" (submit)="pushActionToFormSequence()">
+      <div class="modal-body">
+        <div class="row">
+            <div class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6" *ngFor="let type of actionTypes">
+                <div class="form-check ms-1 mt-1 mb-1">
+                    <input class="form-check-input" type="radio" name="type" id="{{type}}" [value]="type" formControlName="type">
+                    <label class="form-check-label" for="{{type}}"> {{ type.name }}</label>
+                </div>
+            </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')" i18n>Cerrar</button>
+        <button type="submit" class="btn btn-primary" i18n>Añadir acción</button>
+      </div>
+    </form> 
+</ng-template>
+<!-- end: Modal for adding new action -->
+
+
+<!-- start: Modal for edit action -->
+<ng-template #editActionModal let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title" i18n>Editar acción</h4>
+    </div>
+    <form [formGroup]="actionForm" (submit)="submitFormAction()">
+      <div class="modal-body" formArrayName="parameters">
+        
+        <!-- begin: Form action for types: 'temperature', 'humidity', 'time', 'date' and 'text' -->
+        <ng-container *ngIf="actionForm.get('type').value == 'temperature' || actionForm.get('type').value == 'humidity' || actionForm.get('type').value == 'time' || actionForm.get('type').value == 'date' || actionForm.get('type').value == 'text' || actionForm.get('type').value == 'saints' || actionForm.get('type').value == 'weather'">
+            <div class="row">
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formTopDrawing" class="form-label" i18n>Dibujo superior</label>
+                    <select class="form-select" id="formTopDrawing" formControlName="top_drawing">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['top_drawing']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formBottomDrawing" class="form-label" i18n>Dibujo inferior</label>
+                    <select class="form-select" id="formBottomDrawing" formControlName="bottom_drawing">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['bottom_drawing']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formEffect" class="form-label" i18n>Efecto</label>
+                    <select class="form-select" id="formEffect" formControlName="effect">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['effect']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div *ngIf="productModel.bicolor && productModel.bicolor == true" class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formColor" class="form-label" i18n>Color</label>
+                    <select class="form-select" id="formColor" formControlName="color">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['color']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formFontSize" class="form-label" i18n>Tipografía</label>
+                    <select class="form-select" id="formFontSize" formControlName="font_family">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['font_family']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formFontSize" class="form-label" i18n>Fuente</label>
+                    <select class="form-select" id="formFontSize" formControlName="font_size" (change)="calculateRowsAvailable()">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['font_size']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formRow" class="form-label" i18n>Fila<i class="bi bi-question-circle cursor-pointer" style="padding-left: 4px;" (click)="showHelpModal()"></i></label>
+                    <select class="form-select" id="formRow" formControlName="row">
+                        <option *ngFor="let param of availableRows" [ngValue]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formSpeed" class="form-label" i18n>Velocidad</label>
+                    <select class="form-select" id="formSpeed" formControlName="speed">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['speed']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+                <div class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <label for="formPause" class="form-label" i18n>Pausa</label>
+                    <select class="form-select" id="formPause" formControlName="pause">
+                        <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['pause']" [value]="param.id">{{ param.name }}</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div *ngIf="optionAvailable('delete_single_row')" class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formDeleteSingleRow" formControlName="delete_single_row">
+                        <label class="form-check-label" for="formDeleteSingleRow" i18n>Antes borrar solo fila</label>
+                    </div>
+                </div>
+                <div *ngIf="optionAvailable('delete_all')" class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formDeleteAll" formControlName="delete_all">
+                        <label class="form-check-label" for="formDeleteAll" i18n>Antes borrar todo</label>
+                    </div>
+                </div>
+                <div *ngIf="optionAvailable('text_in_out')" class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formTextInOut" formControlName="text_in_out" (change)="toggleRadio($event)">
+                        <label class="form-check-label" for="formTextInOut" i18n>El texto entra y sale</label>
+                    </div>
+                </div>
+                <div *ngIf="optionAvailable('text_only_in')" class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formTextOnlyIn" formControlName="text_only_in" (change)="toggleRadio($event)">
+                        <label class="form-check-label" for="formTextOnlyIn" i18n>El texto solo entra</label>
+                    </div>
+                </div>
+               <div *ngIf="optionAvailable('orla')" class="col-3 col-sm-3 col-md-3	col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="formOrla" formControlName="orla">
+                        <label class="form-check-label" for="formOrla" i18n>Mostrar Orla Encendida</label>
+                    </div>
+                </div>
+            </div>
+            <div class="row" *ngIf="actionForm.get('type').value == 'text'">
+                <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                    <label for="formMessage" class="form-label" i18n>Texto</label>
+                    <input type="text" class="form-control" id="formMessage" placeholder="Ej.: Buenos días" formControlName="message" [ngClass]="[submitFormAction && actionForm.controls.parameters.controls.message.errors?.required ? 'is-invalid' : '', submitFormAction && actionForm.controls.parameters.controls.message.errors?.maxlength ? 'is-invalid' : '']">
+                    <div class="invalid-feedback" *ngIf="actionForm.controls.parameters.controls.message.errors?.required" i18n>No puede estar vacío.</div>
+                    <div class="invalid-feedback" *ngIf="!actionForm.controls.parameters.controls.message.errors?.required && actionForm.controls.parameters.controls.message.errors?.maxlength" i18n>Máximo 1024 caracteres. Ahora tienes {{actionForm.controls.parameters.controls.message.errors?.maxlength?.actualLength}} caracteres</div>
+                </div>
+            </div>
+        </ng-container>
+        <!-- end: Form action for types: 'temperature', 'humidity', 'time' and 'date' -->
+
+        <!-- begin: Form action for IN CONSTRUCTION -->
+        <div class="row" *ngIf="!actionForm.get('type').value">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <p class="text-uppercase" i18n>En construcción.</p>
+            </div>
+        </div>
+        <!-- end: Form action for IN CONSTRUCTION -->
+        
+        <!-- begin: Form action for types:'animation' -->
+        <div class="row" *ngIf="actionForm.get('type').value == 'animation'">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <div class="row">
+                    <div class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                        <label for="formAnimation" class="form-label" i18n>Animación</label>
+                        <select class="form-select" id="formAnimation" formControlName="animation">
+                            <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['animation']" [value]="param.id">{{ param.name }}</option>
+                        </select>
+                    </div>
+                    <div *ngIf="productModel.bicolor && productModel.bicolor == true" class="col-6 col-sm-6 col-md-6	col-lg-6 col-xl-6 col-xxl-6 mb-3">
+                        <label for="formColor" class="form-label" i18n>Color</label>
+                        <select class="form-select" id="formColor" formControlName="color">
+                            <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['color']" [value]="param.id">{{ param.name }}</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: Form action for types: 'animation' -->
+
+         <!-- begin: Form action for types:'image' -->
+         <div class="row" *ngIf="actionForm.get('type').value == 'image'">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <div class="row">
+                    <div class="col-3 col-sm-3 col-md-3 col-lg-3 col-xl-3 col-xxl-3 mb-3">
+                        <label for="formPause" class="form-label" i18n>Pausa</label>
+                        <select class="form-select" id="formPause" formControlName="pause">
+                            <option *ngFor="let param of modelAttributes[actionForm.get('type').value]['pause']" [value]="param.id">{{ param.name }}</option>
+                        </select>
+                    </div>
+
+                    <div class="col-9 col-sm-9 col-md-9	col-lg-9 col-xl-9 col-xxl-9 mb-9">
+                        <label for="formImg" class="form-label" i18n>Imagen</label>
+                        <input class="form-control" type="file" accept="image/png, image/jpeg" id="formImg" (change)="onChange($event)">
+                        <img id="uploadedImg" [src]="getImageAtIndex(index)['filePath']" style="margin-top: 10px; max-height: 200px;">
+                        <canvas id="canvas" width="56" height="56" style="display: none; visibility: hidden;"></canvas>
+                        <input class="w-100" type="text" formControlName="img" readonly hidden>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- end: Form action for types: 'image' -->
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="closeEditActionModal()" i18n>Cerrar</button>
+        <button type="submit" class="btn btn-primary" i18n>Editar acción</button>
+      </div>
+    </form> 
+  </ng-template>
+  <!-- end: Modal for edit action -->
+
+  
+<!-- start: Modal for deleting sequence -->
+<ng-template #deleteSequenceModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title " id="modal-basic-title" i18n>Eliminando secuencia</h4>
+    </div>
+
+    <div class="modal-body">
+        <div class="mb-3">
+            <p *ngIf="location" i18n>Esta sequencia esta en uso en el {{location}}. ¿Seguro que quiere eliminarla?</p>
+            <p *ngIf="!location" i18n>¿Seguro que quiere eliminar la sequencia?</p>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger me-auto" (click)="acceptDeleteSequence(sequence)"
+            i18n>Eliminar</button>
+        <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Close button click')"
+            i18n>Cerrar</button>
+    </div>
+</ng-template>
+<!-- end: Modal for deleting sequence -->
+
+<!-- start: Modal for Showing rows -->
+<ng-template #showRowsModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title " id="modal-basic-title" i18n>Filas</h4>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <div class="row border">
+                <div class="col" *ngFor="let num of helpTable" style="padding-top: 0 !important">
+                    <div class="row d-flex h-100">
+                        <div class="d-flex border" *ngFor="let col of num"><span class="my-auto">{{col}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary" (click)="modal.dismiss('Close button click')"
+            i18n>Cerrar</button>
+    </div>
+</ng-template>
+<!-- end: Modal for Showing rows -->
+
+<!-- start: Modal for sequence simulator -->
+<ng-template #sequenceSimulatorModal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" i18n>Simulador de secuencias</h4>
+    </div>
+    <div class="modal-body">
+        <tecneplas-sequence-simulator [sequence]="sequenceForm.value" [productModel]="productModel"></tecneplas-sequence-simulator>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')" i18n>Cerrar</button>
+    </div>
+</ng-template>
+<!-- end: Modal for sequence simulator -->

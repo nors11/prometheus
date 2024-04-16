@@ -1,0 +1,163 @@
+<div class="row bg-white" [ngClass]="{'ps-5': pharmacy}">
+    <div class="col-12 col-lg-5 pt-4 pb-4 ps-4">
+        <h6 i18n>Productos</h6> <span
+            class="border-start border-secondary border-1 ms-3 ps-3 pt-2 pb-2 my-auto text-secondary fs-12" i18n>Tienes
+            <span class="text-info">{{crossNumber}} productos</span> en total</span>
+    </div>
+    <div class="col-12 col-lg-7 pt-2 pb-2 pe-4 d-none d-lg-flex">
+        <div class="d-table h-100 me-0 ms-auto pe-3">
+            <div class="pe-2 w-auto my-auto d-table-cell align-middle">
+                <input id="typeahead-basic" type="text" class="form-control tecneplas-input" placeholder="Buscar"
+                    [(ngModel)]="model" (ngModelChange)="valuechange($event)" />
+            </div>
+            <div class="my-auto d-table-cell align-middle">
+                <button class="btn-primary btn d-block ms-0 me-0 mx-auto" (click)="newProduct()">
+                    <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z"
+                            fill="#FFFFFF" />
+                    </svg>
+                    <span i18n>Añadir Producto</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="col-12 d-flex d-lg-none mb-4">
+        <div class="w-100">
+            <button class="btn-primary btn d-block ms-0 me-0 mx-auto mb-3" (click)="newProduct()">
+                <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd"
+                        d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z"
+                        fill="#FFFFFF" />
+                </svg>
+                <span i18n>Añadir Producto</span>
+            </button>
+            <input id="typeahead-basic" type="text" class="form-control" placeholder="Buscar"
+                [(ngModel)]="model" (ngModelChange)="valuechange($event)" />
+        </div>
+    </div>
+</div>
+<div class="row mt-4 ms-0 ms-lg-4 me-0 me-lg-4" [ngClass]="{'ps-5': pharmacy}">
+    <div class="col-12">
+        <div class="row d-none d-lg-flex">
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Nombre</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Contratado por</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Estado</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Modo</h3>
+            </div>
+            <div class="col-1">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n></h3>
+            </div>
+        </div>
+        <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 pt-3 pb-3 cursor-pointer"
+            *ngFor="let cross of crosses" [routerLink]="['/cross', cross._id]">
+            <div class="col-12 col-lg-3 m-auto">
+                <div class="row">
+                    <div class="col-3 d-flex d-none d-lg-flex">
+                        <div class="d-flex m-auto rounded bg-body p-3">
+                            <svg class="m-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0 1H1.5V5L4 5V4C4 2.89543 4.89543 2 6 2H14C15.1046 2 16 2.89543 16 4V12C16 13.1046 15.1046 14 14 14H6C4.89543 14 4 13.1046 4 12V11.1002H1.5V15H0V11.1002V9.60017V6.5V5V1ZM1.5 6.5H4V9.60017H1.5V6.5ZM6.5 3.5C5.94772 3.5 5.5 3.94772 5.5 4.5V11.5C5.5 12.0523 5.94772 12.5 6.5 12.5H13.5C14.0523 12.5 14.5 12.0523 14.5 11.5V4.5C14.5 3.94772 14.0523 3.5 13.5 3.5H6.5ZM10.75 11V8.75014H13V7.25014H10.75V5H9.25V7.25014H7V8.75014H9.25V11H10.75Z"
+                                    fill="#6B7394" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <h3 class="text-primary fw-bold fs-11 lh-2">
+                            {{cross.name}}
+                        </h3>
+                        <span class="text-secondary fs-12 lh-1">{{cross.number_plate}} | {{cross?.model?.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 m-auto mt-2 mt-lg-0 text-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <svg class="my-auto" width="14" height="14" viewBox="0 0 14 14" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M8.58064 14H14V3.3871C14 2.96788 13.8335 2.56584 13.537 2.26941C13.2406 1.97298 12.8386 1.80645 12.4194 1.80645H8.58064V1.58065C8.58064 1.16143 8.41411 0.759389 8.11769 0.46296C7.82126 0.166532 7.41921 0 7 0H1.58065C1.16143 0 0.759389 0.166532 0.46296 0.46296C0.166532 0.759389 0 1.16143 0 1.58065V14H8.58064ZM8.58064 6.77419H12.6452V9.03226H8.58064V6.77419ZM8.58064 12.6452V10.3871H12.6452V12.6452H8.58064ZM12.4194 3.16129C12.4792 3.16129 12.5367 3.18508 12.579 3.22743C12.6214 3.26977 12.6452 3.32721 12.6452 3.3871V5.41935H8.58064V3.16129H12.4194ZM4.96774 12.6452V11.0645H3.6129V12.6452H1.35484V1.58065C1.35484 1.52076 1.37863 1.46332 1.42098 1.42098C1.46332 1.37863 1.52076 1.35484 1.58065 1.35484H7C7.05989 1.35484 7.11732 1.37863 7.15967 1.42098C7.20202 1.46332 7.22581 1.52076 7.22581 1.58065V12.6452H4.96774ZM4.96775 3.61291H3.61291V4.96775H4.96775V3.61291ZM3.61291 7.22581H4.96775V8.58065H3.61291V7.22581Z"
+                                fill="#1D1D43" />
+                        </svg>
+                        <span class="pt-2 ms-2">{{cross.pharmacy.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 m-auto mt-2 mt-lg-0 text-primary">
+                <div class="d-inline-flex ps-2 pe-2 pt-1 pb-1 bg-online border border-success border-1 rounded-pill"
+                    *ngIf="cross.status">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-wifi-2 m-auto me-2" viewBox="0 0 16 16">
+                        <path
+                            d="M13.229 8.271c.216-.216.194-.578-.063-.745A9.456 9.456 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.577 1.336c.205.132.48.108.652-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.408.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.611-.091l.015-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .708 0l.707-.707z"
+                            fill="#69CE6A" />
+                    </svg>
+                    <span class="m-auto" i18n>En línea</span>
+                </div>
+                <div class="d-inline-flex ps-2 pe-2 pt-1 pb-1 bg-offline border border-secondary border-1 rounded-pill"
+                    *ngIf="!cross.status">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="bi bi-wifi-2 m-auto me-2"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M14.591 1.53033C14.8839 1.23744 14.8839 0.762563 14.591 0.46967C14.2981 0.176777 13.8232 0.176777 13.5303 0.46967L1.53034 12.4697C1.23745 12.7626 1.23745 13.2374 1.53034 13.5303C1.82323 13.8232 2.29811 13.8232 2.591 13.5303L7.54192 8.57941C7.69318 8.56139 7.84611 8.55222 7.99999 8.55222C8.72587 8.55222 9.43073 8.75613 10.038 9.13222C10.4571 9.39178 11.0187 9.40262 11.3672 9.05405C11.7159 8.70541 11.7192 8.1333 11.3201 7.84379C10.6918 7.38803 9.97716 7.06706 9.22161 6.89972L11.5628 4.5585C12.4976 4.98238 13.3582 5.57349 14.0984 6.31275C14.0997 6.3141 14.1016 6.31486 14.1035 6.31486C14.1054 6.31486 14.1072 6.31561 14.1086 6.31696L14.2913 6.49973C14.5378 6.74622 14.9375 6.74622 15.184 6.49973L15.3688 6.31486C15.7174 5.96626 15.7174 5.40108 15.3688 5.05248C14.639 4.32257 13.8061 3.70648 12.8983 3.22302L14.591 1.53033ZM8.00001 2C8.61738 2 9.23202 2.05486 9.83683 2.16317L8.2096 3.7904C8.13885 3.78866 8.06798 3.78778 7.99703 3.78778C5.708 3.78778 3.51264 4.69675 1.89357 6.31486C1.54498 6.66345 0.979792 6.66345 0.631197 6.31486C0.282602 5.96626 0.282602 5.40108 0.631197 5.05248C1.59885 4.08473 2.74765 3.31707 4.012 2.79332C5.27634 2.26957 6.63147 2 8.00001 2ZM8.00001 13.3145C8.4933 13.3145 8.8932 12.9146 8.8932 12.4213C8.8932 11.928 8.4933 11.5281 8.00001 11.5281C7.50671 11.5281 7.10682 11.928 7.10682 12.4213C7.10682 12.9146 7.50671 13.3145 8.00001 13.3145Z"
+                            fill="#BAC0D9" />
+                    </svg>
+                    <span class="m-auto" i18n>Desconectado</span>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2 m-auto mt-2 mt-lg-0 text-primary">
+                <span>{{cross.mode | modeAbbreviation}}</span>
+            </div>
+            <div class="col-12 col-lg-1 mt-2 m-auto text-primary">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="btn-group dropdown float-lg-end">
+                            <a data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
+                                <div class="btn btn-outline-primary"><i class="bi bi-three-dots-vertical"></i></div>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li class="cursor-pointer"><a class="dropdown-item text-danger fw-bold"
+                                        (click)="$event.preventDefault();$event.stopPropagation();openRemoveCross(deleteActionModal, cross)" i18n>Eliminar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <p style="margin-top: 9px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- start: Modal for deleting cross -->
+<ng-template #deleteActionModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Eliminar {{cross.name}}</h6>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <label class="form-label" i18n>Vas a eliminar {{cross.name}}. Esta acción no se podrá deshacer,
+                    ¿Seguro que quieres continuar?</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer bg-body">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')"
+            i18n>Cancelar</button>
+        <button type="submit" class="btn btn-danger text-light" i18n (click)="removeCross()">Eliminar producto</button>
+    </div>
+</ng-template>
+<!-- end: Modal for deleting cross -->

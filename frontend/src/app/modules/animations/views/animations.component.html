@@ -1,0 +1,31 @@
+<div class="row bg-white">
+    <div class="col-12 col-sm-5 pt-4 pb-4 ps-4">
+        <h6 i18n>Animaciones</h6> <span class="border-start border-secondary border-1 ms-3 ps-3 pt-2 pb-2 my-auto text-secondary fs-12" i18n>Tienes <span class="text-info"> {{ animations.length }} animaciones</span> en total</span>
+    </div>
+    <div class="col-12 col-sm-7 pt-2 pb-2 pe-4">
+        <div class="d-table h-100 me-0 ms-sm-auto pe-3">
+            <div class="my-auto d-table-cell align-middle">
+                <button class="btn-primary btn d-block ms-0 me-0 mx-auto" [routerLink]="['new']">
+                    <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z" fill="#FFFFFF"/>
+                    </svg>
+                    <span i18n>Añadir animación</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 ms-4 me-4">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-12">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Nombre</h3>
+            </div>
+        </div>
+        <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 pt-3 pb-3" *ngFor="let animation of animations">
+            <div class="col-12 m-auto">
+                <h3 class="text-primary fw-bold fs-11 lh-2 mt-3 ms-3">{{animation?.name}}</h3>
+            </div>
+        </div>
+    </div>
+</div>

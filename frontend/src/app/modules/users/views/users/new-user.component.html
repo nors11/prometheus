@@ -1,0 +1,143 @@
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 min-vh-100 p-0 d-md-block sidebar collapse bg-white">
+            
+            <div class="d-flex pt-4 pb-4">
+                <a class="navbar-brand ms-5" [routerLink]="['/products']">
+                    <img class="m-auto" src="assets/img/tecneplas-brand.svg" width="160">
+                </a>
+            </div>
+            
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link p-0" aria-current="page" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 0}">
+                            <div class="pt-3 pb-3 ms-5">
+                                1
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Datos del usuario</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item"  *ngIf="user.role == userRole.admin">
+                        <a class="nav-link p-0" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 1}">
+                            <div class="pt-3 pb-3 ms-5">
+                                2
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Rol del usuario</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10">
+            <div class="text-end m-4" *ngIf="!loading && currentWizardNumber !== 2">
+                <a *ngIf="!pharmacy" class="text-primary" [routerLink]="['/users']"> <i class="bi bi-x-circle fs-1"></i> </a>
+                <a *ngIf="pharmacy" class="text-primary" [routerLink]="['/pharmacy/', pharmacy]"> <i class="bi bi-x-circle fs-1"></i> </a>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                    <div class="mt-5" *ngIf="!loading">
+                        <div *ngIf="currentWizardNumber === 0">
+                            <form #newUserNgForm="ngForm" [formGroup]="newUserForm" (ngSubmit)="newUserNgForm.form.valid && submitUserDistributorForm()">
+                                <h5>Nuevo usuario</h5>
+                                <p class="fs-10" i18n>Para empezar, añade los siguientes datos</p>
+
+                                <div class="col form-group">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Nombre</label>
+                                    <input type="text" class="form-control form-control-lg" required formControlName="name" [ngClass]="[newUserNgForm.submitted && newUserForm.controls.name.errors?.required ? 'is-invalid' : '']">
+                                    <div class="invalid-feedback" *ngIf="newUserForm.controls.name.errors?.required" i18n>Debe introducir un nombre</div>
+                                </div>
+
+                                <div class="col mt-4">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Appellidos</label>
+                                    <input type="text" class="form-control form-control-lg" required formControlName="surname" [ngClass]="[newUserNgForm.submitted && newUserForm.controls.surname.errors?.required ? 'is-invalid' : '']">
+                                    <div class="invalid-feedback" *ngIf="newUserForm.controls.surname.errors?.required">Debe introducir un apellido</div>
+                                </div>
+
+                                <div class="col mt-4 mb-4">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Correo</label>
+                                    <input type="text" class="form-control form-control-lg" required formControlName="email" [ngClass]="[newUserNgForm.submitted && newUserForm.controls.email.errors?.required ? 'is-invalid' : '']">
+                                    <div class="invalid-feedback" *ngIf="newUserForm.controls.email.errors?.required" i18n>Debe introducir un correo</div>
+                                </div>
+
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" disabled i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+                        <div *ngIf="currentWizardNumber === 1">
+                            <form #userRoleNgForm="ngForm" [formGroup]="userRoleForm" (ngSubmit)="userRoleNgForm.form.valid && submitUserRoleForm()">
+                                    <h5 i18n>Rol del usuario</h5>
+                                    <p class="fs-10" i18n>Elige el rol del usuario</p>
+                                    
+
+                                    <div class="col">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Elige el rol</label>
+                                        <select class="form-control form-select" formControlName="role" (change)="changeRole()" [ngClass]="[userRoleNgForm.submitted && userRoleForm.controls.role.errors?.required ? 'is-invalid' : '']" required>
+                                            <option value="" i18n>Seleccionar rol...</option>
+                                            <option *ngFor="let role of userRole | keyvalue" [ngValue]="role.value"> {{ role.value | roleAbbreviation }}</option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="userRoleForm.controls.role.errors?.required" i18n>Debe introducir un rol</div>
+                                    </div>
+
+                                    <div class="col mt-4">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Elige el distribuidor</label>
+                                        <select class="form-control form-select" formControlName="distributor"  [ngClass]="[userRoleNgForm.submitted && userRoleForm.controls.distributor.errors?.required ? 'is-invalid' : '']" required>
+                                            <option value="" i18n>Seleccionar distribuidor...</option>
+                                            <option *ngFor="let distributor of distributors" [ngValue]="distributor._id"> {{distributor.name}} </option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="userRoleForm.controls.distributor.errors?.required" i18n>Debe introducir un distribuidor</div>
+                                    </div>
+
+                                    <div class="col mt-4 mb-4">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Elige la farmacia</label>
+                                        <select class="form-control form-select" formControlName="pharmacy"  [ngClass]="[userRoleNgForm.submitted && userRoleForm.controls.pharmacy.errors?.required ? 'is-invalid' : '']" required>
+                                            <option value="" i18n>Seleccionar farmacia...</option>
+                                            <option *ngFor="let pharmacy of pharmacies" [ngValue]="pharmacy._id"> {{pharmacy.name}} </option>
+                                        </select>
+                                        <div class="invalid-feedback" *ngIf="userRoleForm.controls.pharmacy.errors?.required" i18n>Debe introducir una farmacia</div>
+                                    </div>
+
+                                    <button class="mt-1 btn btn-lg btn-outline-primary me-2" (click)="previousCurrentWizard()" i18n>Atrás</button>
+                                    <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+                        
+                        <div class="text-center" *ngIf="currentWizardNumber === 2">
+                            <p ><i class="bi bi-check2 h1 text-success"></i></p>
+                            <p class="fs-10 mb-4 mt-4">¡Perfecto! Has añadido al usuario {{account?.email}}.</p>
+    
+                            <button *ngIf="!pharmacy" type="button" class="btn btn-lg btn-primary w-75" [routerLink]="['/users']" i18n>Volver al listado de usuarios</button>
+                            <button *ngIf="pharmacy" type="button" class="btn btn-lg btn-primary w-75" [routerLink]="['/pharmacy/', pharmacy]" i18n>Volver al listado de usuarios</button>
+                        </div>
+                    </div>
+                    <div *ngIf="loading" class="text-center" style="margin-top: 50%;margin-bottom: 2%;">
+                        <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </main>
+
+    </div>
+</div>
+
+<!-- start: Modal for Create user errors -->
+<ng-template #errorsModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Error</h6>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <label class="form-label" i18n>{{errorMessage}}</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer bg-body">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')" i18n>Aceptar</button>
+    </div>
+</ng-template>
+<!-- end: Modal for Create user errors -->

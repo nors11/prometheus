@@ -1,0 +1,154 @@
+<div class="row bg-white" [ngClass]="{'ps-5': pharmacy}">
+    <div class="col-12 col-lg-5 pt-4 pb-4 ps-4">
+        <h6 i18n>Clientes</h6> <span
+            class="border-start border-secondary border-1 ms-3 ps-3 pt-2 pb-2 my-auto text-secondary fs-12" i18n>Tienes
+            <span class="text-info">{{countUsers}} Clientes</span> en total</span>
+    </div>
+    <div class="my-auto d-table-cell align-middle d-flex d-lg-none">
+        <button class="btn-primary btn d-block ms-0 me-0 mx-auto" (click)="newUser()">
+            <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" clip-rule="evenodd"
+                    d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z"
+                    fill="#FFFFFF" />
+            </svg>
+            <span i18n>Añadir Cliente</span>
+        </button>
+    </div>
+    <div class="col-12 col-lg-7 pt-2 pb-2 pe-4" >
+        <div class="d-table h-100 me-0 ms-lg-auto pe-3">
+            <div class="pe-2 w-auto my-auto d-table-cell align-middle">
+                <input id="typeahead-basic" type="text" class="form-control tecneplas-input" placeholder="Buscar"
+                    [(ngModel)]="model" (ngModelChange)="valuechange($event)" />
+            </div>
+            <div class="my-auto d-table-cell align-middle d-none d-lg-flex">
+                <button class="btn-primary btn d-block ms-0 me-0 mx-auto" (click)="newUser()" style="margin-top: 12px;">
+                    <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z"
+                            fill="#FFFFFF" />
+                    </svg>
+                    <span i18n>Añadir Cliente</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 ms-1 ms-lg-4 me-1 me-lg-4">
+    <div *ngIf="pharmacy" class="col-2 p-4 bg-light text-center" style="max-height: 250px;">
+        <p class="fs-10 fw-bold mb-4" i18n>Distribuidor/a</p>
+        <div class="circle" style="display: inline-grid; width: 48px;height: 48px;">
+            <span class="m-auto">{{pharmacy?.distributors[0]?.name[0]}}</span>
+        </div>
+        <p class="fw-bold mt-2 fs-11 mb-0">{{pharmacy?.distributors[0]?.name}}</p>
+        <p class="fs-12 fw-regular mt-0">{{pharmacy?.distributors[0]?.email}}</p>
+    </div>
+    <div [ngClass]="[pharmacy? 'col-10 ps-4' : 'col-12']">
+        <div class="row">
+            <div class="col-5">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Usuario</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Estado</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Rol</h3>
+            </div>
+            <div class="col-1">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n></h3>
+            </div>
+        </div>
+        <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-2 pt-3 pb-3"
+            *ngFor="let account of accounts">
+            <div class="col-5 m-auto">
+                <div class="d-flex">
+                    <div class="d-flex pe-2 d-none d-lg-flex">
+                        <div class="d-flex m-auto rounded">
+                            <div class="circle">
+                                <span class="m-auto">{{account?.name[0]}}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ps-0">
+                        <h3 class="text-primary fw-bold fs-11 lh-2 mb-0">
+                            {{account?.name}} {{account?.surname}}
+                        </h3>
+                        <span class="text-secondary fs-12 lh-1"> {{account?.email}} </span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 m-auto text-primary">
+                <div *ngIf="account && account.status === true">
+                    <svg width="14" class="me-2" height="14" viewBox="0 0 14 14" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M0.333252 7.00004C0.333252 3.31826 3.31814 0.333374 6.99992 0.333374C10.6817 0.333374 13.6666 3.31826 13.6666 7.00004C13.6666 10.6818 10.6817 13.6667 6.99992 13.6667C3.31814 13.6667 0.333252 10.6818 0.333252 7.00004ZM10.0373 4.38502C9.85963 4.35039 9.67782 4.40696 9.5514 4.53298L6.10341 8.30501L4.47917 6.57442L4.43643 6.53352C4.22912 6.3556 3.91668 6.35884 3.71291 6.55005C3.49458 6.75492 3.48367 7.09799 3.68854 7.31632L5.71362 9.47057L5.75357 9.5094C5.83711 9.58256 5.94166 9.62836 6.05255 9.64022L6.11303 9.64329L6.16972 9.63966C6.30071 9.62447 6.4215 9.5626 6.51 9.46453L10.3569 5.25556C10.4663 5.12086 10.5046 4.93434 10.4525 4.76092C10.3947 4.56824 10.2348 4.4235 10.0373 4.38502Z"
+                            fill="#85BC22" />
+                    </svg>
+                    <span class="fw-bold fs-12" style="color: #85BC22" i18n>Activo</span>
+                </div>
+                <div *ngIf="account && account.status === false">
+                    <svg width="14" height="14" class="me-2" viewBox="0 0 14 14" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M7.00008 13.6667C10.6819 13.6667 13.6667 10.6818 13.6667 7.00002C13.6667 3.31824 10.6819 0.333353 7.00008 0.333353C3.3183 0.333353 0.333414 3.31824 0.333414 7.00002C0.333414 10.6818 3.3183 13.6667 7.00008 13.6667ZM7.77045 4.12239V7.17424C7.77045 7.59971 7.42555 7.94461 7.00008 7.94461C6.57462 7.94461 6.22971 7.59971 6.22971 7.17424V4.12239C6.22971 3.69693 6.57462 3.35202 7.00008 3.35202C7.42555 3.35202 7.77045 3.69693 7.77045 4.12239ZM7.00008 8.78521C7.37458 8.78521 7.71221 9.0108 7.85553 9.35679C7.99884 9.70279 7.91962 10.101 7.65481 10.3659C7.39 10.6307 6.99174 10.7099 6.64574 10.5666C6.29975 10.4233 6.07415 10.0856 6.07415 9.71113C6.07415 9.19976 6.48871 8.78521 7.00008 8.78521Z"
+                            fill="#BAC0D9" />
+                    </svg>
+                    <span class="fw-bold fs-12" style="color: #BAC0D9" i18n>Inactivo</span>
+                </div>
+            </div>
+            <div class="col-4 col-lg-3 m-auto text-primary">
+                <div *ngIf="account">
+                    <span class="fw-bold fs-12">{{account.role | roleAbbreviation}}</span>
+                </div>
+            </div>
+            <div class="col-1 m-auto text-primary">
+                <div class="row">
+                    <div class="col-2">
+                        <div class="btn-group dropdown float-lg-end">
+                            <a data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
+                                <div class="btn btn-outline-primary"><i class="bi bi-three-dots-vertical"></i></div>
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <li *ngIf="account && account.status === true" class="cursor-pointer"><a
+                                        class="dropdown-item text-primary fw-bold"
+                                        (click)="status(account, false)" i18n>Desactivar</a></li>
+                                <li *ngIf="account && account.status === false" class="cursor-pointer"><a
+                                        class="dropdown-item text-primary fw-bold"
+                                        (click)="status(account, true)" i18n>Activar</a></li>
+                                <li class="cursor-pointer"><a class="dropdown-item text-danger fw-bold"
+                                        (click)="openRemoveClient(deleteActionModal, account)" i18n>Eliminar</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <p style="margin-top: 9px;"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- start: Modal for deleting user -->
+<ng-template #deleteActionModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Eliminar {{user.name}}</h6>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <label class="form-label" i18n>Vas a eliminar {{user.name}}. Esta acción no se podrá deshacer,
+                    ¿Seguro que quieres continuar?</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer bg-body">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')"
+            i18n>Cancelar</button>
+        <button type="submit" class="btn btn-danger text-light" i18n (click)="removeClient()">Eliminar cliente</button>
+    </div>
+</ng-template>
+<!-- end: Modal for deleting user -->

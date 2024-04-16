@@ -1,0 +1,145 @@
+<div class="bg-white ps-sm-5 pe-sm-5">
+    <div class="row">
+        <div class="col-12 col-sm-9 d-flex ps-4">
+            <a class="text-primary float-start my-auto" [routerLink]="['/products']"><i
+                    class="bi bi-arrow-left-circle fs-1"></i></a>
+            <h1 class="fs-10 fw-bold m-0 ps-2 float-start"><span i18n>{{ cross?.name }}</span></h1>
+        </div>
+        <div class="col-12 col-sm-3 d-grid">
+            <div class="row my-auto">
+                <div class="col-12 col-sm-5 col-md-5 col-lg-5 col-xl-5 col-xxl-5">
+                    <div class="row">
+                        <div class="col-4 p-sm-0 d-grid">
+                            <span class="my-auto">
+                                <strong i18n>Estado: </strong>
+                            </span>
+                        </div>
+                        <div class="col-12 col-sm-8 p-sm-0 pe-sm-3" *ngIf="cross?.status">
+                            <div class="ps-2 pe-2 pt-1 pb-1 bg-online border border-success border-1 rounded-pill d-flex justify-content-center in-width">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-wifi-2 m-auto" viewBox="0 0 16 16">
+                                    <path
+                                        d="M13.229 8.271c.216-.216.194-.578-.063-.745A9.456 9.456 0 0 0 8 6c-1.905 0-3.68.56-5.166 1.526a.48.48 0 0 0-.063.745.525.525 0 0 0 .652.065A8.46 8.46 0 0 1 8 7a8.46 8.46 0 0 1 4.577 1.336c.205.132.48.108.652-.065zm-2.183 2.183c.226-.226.185-.605-.1-.75A6.473 6.473 0 0 0 8 9c-1.06 0-2.062.254-2.946.704-.285.145-.326.524-.1.75l.015.015c.16.16.408.19.611.09A5.478 5.478 0 0 1 8 10c.868 0 1.69.201 2.42.56.203.1.45.07.611-.091l.015-.015zM9.06 12.44c.196-.196.198-.52-.04-.66A1.99 1.99 0 0 0 8 11.5a1.99 1.99 0 0 0-1.02.28c-.238.14-.236.464-.04.66l.706.706a.5.5 0 0 0 .708 0l.707-.707z"
+                                        fill="#69CE6A" />
+                                </svg>
+                                <span class="m-auto pe-2" i18n>En línea</span>
+                            </div>
+                        </div>
+                        <div class="col-8 p-0" *ngIf="!cross?.status">
+                            <div class="ps-2 pe-2 pt-1 pb-1 bg-offline border border-secondary border-1 rounded-pill d-flex justify-content-center">
+                                <svg width="14" height="14" viewBox="0 0 14 14" fill="currentColor"
+                                    class="bi bi-wifi-2 m-auto" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" clip-rule="evenodd"
+                                        d="M14.591 1.53033C14.8839 1.23744 14.8839 0.762563 14.591 0.46967C14.2981 0.176777 13.8232 0.176777 13.5303 0.46967L1.53034 12.4697C1.23745 12.7626 1.23745 13.2374 1.53034 13.5303C1.82323 13.8232 2.29811 13.8232 2.591 13.5303L7.54192 8.57941C7.69318 8.56139 7.84611 8.55222 7.99999 8.55222C8.72587 8.55222 9.43073 8.75613 10.038 9.13222C10.4571 9.39178 11.0187 9.40262 11.3672 9.05405C11.7159 8.70541 11.7192 8.1333 11.3201 7.84379C10.6918 7.38803 9.97716 7.06706 9.22161 6.89972L11.5628 4.5585C12.4976 4.98238 13.3582 5.57349 14.0984 6.31275C14.0997 6.3141 14.1016 6.31486 14.1035 6.31486C14.1054 6.31486 14.1072 6.31561 14.1086 6.31696L14.2913 6.49973C14.5378 6.74622 14.9375 6.74622 15.184 6.49973L15.3688 6.31486C15.7174 5.96626 15.7174 5.40108 15.3688 5.05248C14.639 4.32257 13.8061 3.70648 12.8983 3.22302L14.591 1.53033ZM8.00001 2C8.61738 2 9.23202 2.05486 9.83683 2.16317L8.2096 3.7904C8.13885 3.78866 8.06798 3.78778 7.99703 3.78778C5.708 3.78778 3.51264 4.69675 1.89357 6.31486C1.54498 6.66345 0.979792 6.66345 0.631197 6.31486C0.282602 5.96626 0.282602 5.40108 0.631197 5.05248C1.59885 4.08473 2.74765 3.31707 4.012 2.79332C5.27634 2.26957 6.63147 2 8.00001 2ZM8.00001 13.3145C8.4933 13.3145 8.8932 12.9146 8.8932 12.4213C8.8932 11.928 8.4933 11.5281 8.00001 11.5281C7.50671 11.5281 7.10682 11.928 7.10682 12.4213C7.10682 12.9146 7.50671 13.3145 8.00001 13.3145Z"
+                                        fill="#BAC0D9" />
+                                </svg>
+                                <span class="m-auto" i18n>Desconectado</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-7 col-md-7 col-lg-7 col-xl-7 col-xxl-7">
+                    <div class="row">
+                        <label for="inputMode" class="col-sm-4 col-form-label pe-0 ps-3 ps-sm-5"><strong i18n>Modo:
+                            </strong></label>
+                        <div class=" col-12 col-sm-8">
+                            <select [(ngModel)]="selectedMode" class="form-select" aria-label="Select modes"
+                                (ngModelChange)="modelChangeFn($event)">
+                                <option *ngFor="let crossMode of mode | keyvalue: originalOrder; let i = index;" value="{{crossMode.value}}" i18n>{{crossMode.value | modeAbbreviation}}</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="rowsList">
+    <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12">
+        <div class="bg-white ps-5 pe-5">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="activeTab" class="nav nav-pills">
+                <li ngbNavItem="weekly">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('weekly')" i18n><i
+                            class="bi bi-calendar3-week pe-2"></i>Semanario</a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-body ps-3 ps-sm-5">
+                            <tecneplas-weekly></tecneplas-weekly>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem="calendar">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('calendar')" i18n><i
+                            class="bi bi-calendar3 pe-2"></i>Calendario</a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-body ps-sm-5">
+                            <tecneplas-calendar></tecneplas-calendar>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem="secuences">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('secuences')" i18n><i
+                            class="bi bi-list-ul pe-2"></i>Secuencias</a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-body ps-5 pe-5">
+                            <tecneplas-sequences></tecneplas-sequences>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem="services">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('services')" i18n> <i
+                            class="bi bi-grid pe-2"></i>Servicios</a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-white">
+                            <tecneplas-products-services *ngIf="cross" [cross]="cross"></tecneplas-products-services>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem="settings">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('settings')" i18n><i
+                            class="bi bi-gear pe-2"></i>Ajustes</a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-body ps-5 pe-5">
+                            <tecneplas-products-settings *ngIf="cross" [cross]="cross" (updatedCross)="updateCross($event)"></tecneplas-products-settings>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
+
+        <div [ngbNavOutlet]="nav" class="bg-body"></div>
+    </div>
+</div>
+
+<ng-template #content let-c="close" let-d="dismiss">
+    <form #modelNgForm="ngForm" [formGroup]="operativePersonForm">
+        <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title" i18n>Garantia</h4>
+        </div>
+        <div class="modal-body">
+        <p i18n>¡Atención! Si se acepta el uso del producto sin toma de tierra, se cancela la garantía. ¿Desea aceptar o cancelar el uso sin toma de tierra?</p>
+        <div class="row">
+            <p i18n>Introduce tu DNI i tu nombre para aceptar la garantia.</p>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="form-group">
+                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>DNI</label>
+                    <input type="text" class="form-control form-control-lg" required formControlName="nif" [ngClass]="[modelNgForm.submitted && (operativePersonForm.controls.nif.errors?.required || operativePersonForm.controls.nif.errors?.invalid) ? 'is-invalid' : '']">
+                    <div class="invalid-feedback" *ngIf="operativePersonForm.controls.nif.errors?.required" i18n>Debe introducir un CIF/NIF</div>
+                    <div class="invalid-feedback" *ngIf="!operativePersonForm.controls.nif.errors?.required && operativePersonForm.controls.nif.errors?.invalid">Debe introducir un CIF/NIF válido</div>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                <div class="form-group">
+                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Nombre</label>
+                    <input type="text" class="form-control form-control-lg" required formControlName="name" [ngClass]="[modelNgForm.submitted && operativePersonForm.controls.name.errors?.required ? 'is-invalid' : '']">
+                    <div class="invalid-feedback" *ngIf="operativePersonForm.controls.name.errors?.required" i18n>Debe introducir un nombre</div>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="modal-footer">
+            <button type="submit" class="btn btn-outline-primary me-auto" (click)="operative(false)" i18n>Cerrar</button>
+            <button type="submit" class="btn btn-primary" (click)="operative(true)" i18n>Aceptar</button>
+        </div>
+    </form>
+</ng-template>

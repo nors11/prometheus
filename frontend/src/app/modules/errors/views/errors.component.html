@@ -1,0 +1,127 @@
+<div class="row bg-white">
+    <div class="col-10 pt-4 pb-4 ps-4">
+        <h6 i18n>Alertas</h6> <span
+            class="border-start border-secondary border-1 ms-3 ps-3 pt-2 pb-2 my-auto text-secondary fs-12" i18n>Tienes
+            <span class="text-info">{{crosses?.length}} alertas</span> en total</span>
+    </div>
+    <div class="col-2 pt-2 pb-2 ps-4 pe-4">
+        <div class="row h-100">
+            <div class="my-auto">
+                <button #downloadPDF class="btn-primary btn d-block ms-auto me-0" (click)="downloadErrors()">
+                    <span #downloadSpinner class="spinner-border spinner-border-sm tecneplas-spinner my-auto mr-2"
+                    role="status" aria-hidden="true"></span>
+                    <span i18n>Descargar Informe</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="pdfContent" #pdfContent>
+    <table>
+        <tr>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center; margin-top: 10px" i18n>#</th>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center; margin-top: 10px" i18n>Estado</th>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center; margin-top: 10px" i18n>Cruz</th>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center; margin-top: 10px" i18n>Farmacia</th>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center; margin-top: 10px" i18n>Fecha</th>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center;" i18n>Tipo dispositivo</th>
+            <th style="vertical-align:middle; font-size: 16px; text-align: center; margin-top: 10px" i18n>Alerta</th>
+        </tr>
+        <tr *ngFor="let cross of crosses; let i = index;">
+            <td style="vertical-align:middle; text-align: center; margin-top: 18px; margin-bottom: 18px"><span style="font-size: 12px;">{{i + 1}}</span></td>
+            <td style="vertical-align:middle; text-align: center; margin-top: 15px; margin-bottom: 15px">
+                <svg *ngIf="cross.error.category == category.led || cross.error.status === false" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#ffc107" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <svg *ngIf="cross.error.status === true" xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="#198754" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>    
+            </td>
+            <td style="vertical-align:middle;"><span style="font-size: 12px;">{{cross.name}}<br></span><span style="font-size: 10px;">{{cross.number_plate}} | {{cross.model.name}}</span></td>
+            <td style="vertical-align:middle;"><span style="font-size: 12px;">{{cross.pharmacy.name}}</span></td>
+            <td style="vertical-align:middle;"><span style="font-size: 12px;">{{cross.error.date | date: 'medium'}}</span></td>
+            <td style="vertical-align:middle;"><span style="font-size: 12px;">{{ ((cross.error.category | categoryAbbreviation).charAt(0) | uppercase) + "" + ((cross.error.category | categoryAbbreviation).slice(1, (cross.error.category | categoryAbbreviation).length) | lowercase) }}</span></td>
+            <td style="vertical-align:middle;">
+                <span style="font-size: 12px;" *ngIf="cross.error.status == true" i18n><span *ngIf="cross.error.category == category.fan">El {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está operativo.</span><span *ngIf="cross.error.category == category.power_supply">La {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está operativa.</span></span>
+                <span style="font-size: 12px;" *ngIf="cross.error.status == false" i18n><span *ngIf="cross.error.category == category.fan">El {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está averiado.</span><span *ngIf="cross.error.category == category.power_supply">La {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está averiada.</span></span>
+                <span style="font-size: 12px;" *ngIf="cross.error.category == category.led" i18n>{{cross.error.leds_message}} Total: {{cross.error.leds_ko}} </span>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="row mt-4 ms-4 me-4">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-1">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Estado</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Cruz</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Farmacia</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Fecha</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Tipo dispositivo</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Alerta</h3>
+            </div>
+        </div>
+
+        <div *ngIf="loadding" class="text-center" style="margin-top: 2%;margin-bottom: 2%;">
+            <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
+            </div>
+        </div>
+
+        <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 pt-3 pb-3"
+            *ngFor="let cross of crosses; let i = index;">
+            
+            <div class="col-1 m-auto">
+                <svg *ngIf="cross.error.category == category.led || cross.error.status === false" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#ffc107" class="bi bi-exclamation-triangle-fill" viewBox="0 0 16 16">
+                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                </svg>
+                <svg *ngIf="cross.error.status === true" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="#198754" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                </svg>
+            </div>
+            <div class="col-2 m-auto">
+                <div class="row">
+                    <h3 class="text-primary fw-bold fs-11 lh-2">
+                        {{cross.name}}
+                    </h3>
+                    <span class="text-secondary fs-12 lh-1">{{cross.number_plate}} | {{cross.model.name}}</span>
+                </div>
+            </div>
+            <div class="col-2 m-auto text-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="pt-2">{{cross.pharmacy.name}}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 m-auto text-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <span class="pt-2">{{cross.error.date | date: 'medium' }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-2 m-auto text-primary">
+                <div class="row">
+                    <div class="col-12">                        
+                        <span class="pt-2">{{ ((cross.error.category | categoryAbbreviation).charAt(0) | uppercase) + "" + ((cross.error.category | categoryAbbreviation).slice(1, (cross.error.category | categoryAbbreviation).length) | lowercase) }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 m-auto text-primary">
+                <span *ngIf="cross.error.status == true" i18n><span *ngIf="cross.error.category == category.fan">El {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está operativo.</span><span *ngIf="cross.error.category == category.power_supply">La {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está operativa.</span></span>
+                <span *ngIf="cross.error.status == false" i18n><span *ngIf="cross.error.category == category.fan">El {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está averiado.</span><span *ngIf="cross.error.category == category.power_supply">La {{cross.error.category | categoryAbbreviation}} número {{cross.error.device}} está averiada.</span></span>
+                <span *ngIf="cross.error.category == category.led" i18n>{{cross.error.leds_message}} Total: {{cross.error.leds_ko}} </span>
+            </div>
+        </div>
+    </div>
+</div>

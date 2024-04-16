@@ -1,0 +1,946 @@
+/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files */
+
+/*
+ * Override Botstrap styles with SASS variables
+ */
+
+// Import Bootstrap
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+// Typography type and size
+$font-family-sans-serif: "IBM Plex Sans", sans-serif;
+$input-btn-font-family: $font-family-sans-serif;
+
+// Typography
+$font-size-base: 14px !default; // Assumes the browser default, typically `16px`
+$h1-font-size: 64px;
+$h2-font-size: 56px;
+$h3-font-size: 48px;
+$h4-font-size: 40px;
+$h5-font-size: 32px;
+$h6-font-size: 24px;
+
+$font-sizes: (
+  1: 72px,
+  2: $h1-font-size,
+  3: $h2-font-size,
+  4: $h3-font-size,
+  5: $h4-font-size,
+  6: $h5-font-size,
+  7: $h6-font-size,
+  8: 20px,
+  9: 18px,
+  10: 16px,
+  11: 14px, 
+  12: 12px,
+  13: 10px
+);
+
+$font-weight-bold: 600 !default;
+
+$btn-border-radius: 4px;
+$btn-border-radius-sm: 2px;
+$btn-border-radius-lg: 8px;
+
+
+//Basic
+$white: #FFFFFF;
+$black: #1D1D43;
+
+//Gray
+$grey-100: #FBFBFD;
+$grey-200: #F5F6FA;
+$grey-300: #DCDFEC;
+$grey-400: #BAC0D9;
+$grey-500: #6B7394;
+$grey-600: #4B5168;
+
+//Blue
+$blue-100: #E6EBF9;
+$blue-200: #BDCAF0;
+$blue-300: #3D5AE1;
+$blue: #2C2A86;
+$blue-500: #1F3884;
+$blue-600: #4745C5;
+$blue-900: #1F1D5D;
+
+//Green
+$green-100: #F2F9E6;
+$green-200: #DDEFBE;
+$green-300: #ADD761;
+$green: #85BC22;
+$green-500: #68931B;
+
+//Orange
+$orange-100: #FEF7EB;
+$orange-200: #FDEACE;
+$orange-300: #F9B54E;
+$orange-400: #F7A426;
+$orange: #E18B08;
+
+//Red
+$red-100: #FEF3F0;
+$red-200: #FDD8CE;
+$red-600: #F67150;
+$red: #F45229;
+$red-900: #DE350B;
+
+
+//Semantic
+$semantic-accent: $blue;
+$semantic-accent-light: $blue-100;
+$semantic-danger: $red;
+$semantic-danger-light: $red-100;
+$semantic-warning: $orange-400;
+$semantic-warning-light: $orange-100;
+$semantic-success: $green;
+$semantic-success-light: $green-100;
+$semantic-accent-hover: $blue-600;
+$semantic-accent-active: $blue-900;
+$semantic-accent-disabled: $blue-200;
+$semantic-hover: $grey-100;
+$semantic-active: $grey-200;
+$semantic-danger-hover: $red-600;
+$semantic-danger-active: $red-900;
+$semantic-danger-disabled: $red-200;
+$semantic-success-hover: $green-300;
+$semantic-success-active: $green-500;
+$semantic-success-disabled: $green-200;
+$semantic-warning-hover: $orange-300;
+$semantic-warning-active: $orange-500;
+$semantic-warning-disabled: $orange-200;
+
+//icon color
+$icon-color-cross: #C4C4C4;
+
+//** Background color for `<body>`.
+$body-bg: $grey-200;
+$bg-success: $semantic-success;
+$bg-dark: rgba(29, 29, 67, 0.4);
+$bg-light: $grey-100;
+$body-color: $black;
+
+//$primary:       $black;
+//$secondary:     $gray-500;
+//$info:          $semantic-accent;
+
+// scss-docs-start theme-color-variables
+$primary:       $semantic-accent;
+//$secondary:     $gray-600 !default;
+$success:       $green;
+//$info:          $cyan !default;
+$warning:       $orange-400;
+$danger:        $red;
+$light:         $gray-100;
+$dark:          rgba(29, 29, 67, 0.4);
+// scss-docs-end theme-color-variables
+
+// scss-docs-start theme-colors-map
+$theme-colors: (
+  "primary":    $primary,
+  "secondary":  $secondary,
+  "success":    $success,
+  "info":       $info,
+  "warning":    $warning,
+  "danger":     $danger,
+  "light":      $light,
+  "dark":       $dark
+);
+
+//Font Weight
+$font-weight-regular: 400;
+$font-weight-semibold: 600;
+$font-weight-bold: 700;
+
+//Font Size
+$font-size-1: 10px;
+$font-size-2: 12px;
+$font-size-3: 14px;
+$font-size-4: 16px;
+$font-size-5: 18px;
+$font-size-6: 20px;
+$font-size-7: 24px;
+$font-size-8: 28px;
+$font-size-9: 32px;
+$font-size-10: 36px;
+$font-size-11: 40px;
+$font-size-12: 48px;
+$font-size-13: 56px;
+$font-size-14: 64px;
+$font-size-15: 72px;
+
+//Line Height
+$line-height-1: 16px;
+$line-height-2: 20px;
+$line-height-3: 22px;
+$line-height-4: 28px;
+$line-height-5: 32px;
+$line-height-6: 40px;
+$line-height-7: 50px;
+$line-height-8: 58px;
+$line-height-9: 66px;
+$line-height-10: 74px;
+
+//Size
+$size-1: 4px;
+$size-2: 8px;
+$size-3: 12px;
+$size-4: 16px;
+$size-5: 20px;
+$size-6: 24px;
+$size-7: 32px;
+$size-8: 40px;
+$size-9: 48px;
+$size-10: 56px;
+$size-11: 64px;
+$size-12: 72px;
+$size-13: 80px;
+
+//Border Radius
+$border-radius: 4px;
+$border-radius-sm: 2px;
+$border-radius-lg: 8px;
+$border-radius-pill: 100px;
+$border-radius-circle: 50%;
+
+//Border Width
+$border-width-s: 1px;
+
+//Shadow
+$box-shadow-sm: 0px 2px 4px rgba(0,0,0, 15%);
+$box-shadow: 0px 2px 8px rgba(0,0,0, 15%);
+//$shadow-l: 0px 10px 20px rgba(0,0,0, 10%);
+$box-shadow-lg: 0px 2px 16px rgba(43,77,182, 0.08);
+
+$h1-font-size: 32px;
+$h2-font-size: 40px;
+$h3-font-size: 50px;
+$h4-font-size: 58px;
+$h5-font-size: 66px;
+$h6-font-size: 74px;
+
+$input-height: $size-9;
+
+@import '../node_modules/bootstrap/scss/bootstrap';
+
+html{
+    height: 100%;
+}
+body{
+    height: 100%;
+}
+a{
+  text-decoration: none;
+}
+
+.rounded{
+  border-radius: $border-radius !important;
+}
+.rounded-2{
+  border-radius: $border-radius-lg !important;
+}
+.rounded-pill{
+  border-radius: $border-radius-pill !important;
+}
+.rounded-circle{
+  border-radius: $border-radius-circle !important;
+}
+
+.border-dashed{
+  border-style: dashed !important;
+  border-color: #2C2A86 !important;
+}
+
+.shadow-lg{
+  box-shadow: $box-shadow-lg !important;
+}
+
+.shadow{
+  box-shadow: $box-shadow !important;
+}
+
+.shadow-sm{
+  box-shadow: $box-shadow-sm !important;
+}
+
+.bg-primary{
+  background-color: $body-bg !important;
+}
+
+.bg-body{
+  background-color: $body-bg !important;
+}
+
+.bg-danger{
+  background-color: $danger !important;
+}
+
+.bg-success{
+  background-color: $bg-success !important;
+}
+
+.bg-dark{
+  background-color: $bg-dark !important;
+}
+
+.bg-light{
+  background-color: $bg-light !important;
+}
+
+.bg-online{
+  background-color: #F2F9E6;
+}
+
+.bg-enum{
+  background-color: $semantic-accent-light !important;
+}
+
+.fs-7{
+  font-size: $font-size-9;
+}
+
+.fs-8{
+  font-size: $font-size-8;
+}
+
+.fs-9{
+  font-size: $font-size-7;
+}
+
+
+.fs-10{
+  font-size: $font-size-6;
+}
+
+.fs-11{
+  font-size: $font-size-5;
+}
+
+.fs-10{
+  font-size: $font-size-4;
+}
+
+.fs-11{
+  font-size: $font-size-3;
+}
+
+.fs-12{
+  font-size: $font-size-2;
+}
+
+.fs-13{
+  font-size: $font-size-1;
+}
+
+.text-primary{
+  color: $black !important;
+}
+.text-secondary{
+  color: $grey-500;
+}
+.text-info{
+  color: $semantic-accent !important;
+}
+
+.text-danger{
+  color: $semantic-danger !important;
+}
+
+.fw-bolder{
+  font-weight: $font-weight-bold;
+}
+.fw-bold{
+  font-weight: $font-weight-semibold;
+}
+.fw-regular{
+  font-weight: $font-weight-regular;
+}
+
+.lh-1{
+  line-height: $line-height-1;
+}
+
+.lh-2{
+  line-height: $line-height-2;
+}
+
+.lh-3{
+  line-height: $line-height-3;
+}
+
+.lh-4{
+  line-height: $line-height-4;
+}
+
+.lh-5{
+  line-height: $line-height-5;
+}
+
+.lh-6{
+  line-height: $line-height-6;
+}
+
+.lh-7{
+  line-height: $line-height-7;
+}
+
+.lh-8{
+  line-height: $line-height-8;
+}
+
+.lh-9{
+  line-height: $line-height-9;
+}
+
+.lh-10{
+  line-height: $line-height-10;
+}
+
+
+//Detail
+.detail{
+  font-weight: $font-weight-regular;
+  font-size: $font-size-2;
+  line-height: $line-height-1;
+}
+
+.detail-semibold{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-2;
+  line-height: $line-height-1;
+}
+
+//Body
+body{
+  font-weight: $font-weight-regular;
+  font-size: $font-size-3;
+  line-height: $line-height-2;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+.body{
+  font-weight: $font-weight-regular;
+  font-size: $font-size-3;
+  line-height: $line-height-2;
+}
+
+.body-semibold{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-3;
+  line-height: $line-height-2;
+}
+
+.body-lg{
+  font-weight: $font-weight-regular;
+  font-size: $font-size-4;
+  line-height: $line-height-3;
+}
+
+.body-lg-semibold{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-4;
+  line-height: $line-height-3;
+}
+
+//Button
+.btn-sm{
+  font-weight: $font-weight-bold;
+  font-size: $font-size-2;
+  line-height: $line-height-1;
+  height: $size-7;
+}
+
+.btn{
+  font-weight: $font-weight-bold;
+  font-size: $font-size-3;
+  line-height: $line-height-1;
+  height: $size-8;
+  padding: $size-3;
+}
+
+.btn-lg{
+  font-weight: $font-weight-bold;
+  font-size: $font-size-4;
+  line-height: $line-height-1;
+  height: $size-9;
+}
+
+.btn-primary{
+  background-color: $semantic-accent;
+  border:none;
+  border-radius: $btn-border-radius;
+}
+
+.btn-primary:hover{
+  background-color: $semantic-accent-hover;
+}
+
+.btn-primary:active{
+  background-color: $semantic-accent-active;
+}
+
+.btn-primary:disabled{
+  background-color: $semantic-accent-disabled;
+}
+
+.btn-danger{
+  background-color: $semantic-danger;
+  border-radius: $btn-border-radius;
+  border:none;
+  color: $semantic-hover;
+}
+
+.btn-danger:hover{
+  background-color: $semantic-danger-hover;
+}
+
+.btn-danger:active{
+  background-color: $semantic-danger-active;
+}
+
+.btn-danger:disabled{
+  background-color: $semantic-danger-disabled;
+}
+
+.btn-outline-primary{
+  background-color: $white;
+  border-color: $grey-300;
+  border-radius: $btn-border-radius;
+  color: $semantic-accent;
+}
+
+.btn-outline-primary:hover{
+  @extend .btn-outline-primary;
+  background-color: $semantic-hover !important;
+}
+
+.btn-outline-primary:active{
+  background-color: $semantic-active;
+}
+
+.btn-outline-primary:disabled{
+  background-color: $white;
+  color: $semantic-accent-disabled;
+}
+.btn-check:focus+.btn-light, .btn-light:focus, .btn-light:hover{
+  background-color: $semantic-accent-hover !important;
+  color: white !important;
+}
+
+.btn-check:active+.btn-light, .btn-check:checked+.btn-light, .btn-light.active, .btn-light:active, .show>.btn-light.dropdown-toggle{
+  background-color: $semantic-accent-active !important;
+  color: white !important;
+}
+
+//Link
+.link-sm{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-2;
+  line-height: $line-height-1;
+}
+
+.link{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-3;
+  line-height: $line-height-2;
+}
+
+.link-lg{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-4;
+  line-height: $line-height-3;
+}
+
+//Heading
+.heading-xs{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-6;
+  line-height: $line-height-4;
+}
+
+h6, .h6{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-7;
+  line-height: $line-height-5;
+  display: inline;
+}
+
+h5, .h5{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-9;
+  line-height: $line-height-6;
+}
+
+h4, .h4{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-11;
+  line-height: $line-height-7;
+}
+
+h3, .h3{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-12;
+  line-height: $line-height-8;
+}
+
+h2, .h2{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-13;
+  line-height: $line-height-9;
+}
+
+h1, .h1{
+  font-weight: $font-weight-semibold;
+  font-size: $font-size-14;
+  line-height: $line-height-10;
+}
+
+.border-primary{
+  border-color: $semantic-accent-active !important;
+}
+
+.border-secondary{
+  border-color: $grey-300 !important;
+}
+
+.border-success{
+  border-color: $semantic-success !important;
+}
+
+.border-fest{
+  border-color: $green-500 !important;
+}
+
+.border-guard{
+  border-color: $orange !important;
+}
+
+.password-link{
+  @extend .link-lg;
+  font-weight: $font-weight-regular !important;
+  color: $grey-500;
+}
+input[type=email], input[type=password]{
+  height: $input-height;
+}
+input[type=text]{
+  height: $size-8;
+}
+
+.tecneplas-login-form{
+  width: 400px;
+}
+
+.cursor-pointer{
+  cursor: pointer;
+}
+
+.cursor-pointer:hover{
+  background-color: $semantic-hover !important;
+}
+
+.tecneplas-menu-img{
+  fill: $grey-500;
+}
+
+.tecneplas-menu-img::before {
+  color: $grey-500;
+}
+
+.tecneplas-current-page > div > span{
+  color: $semantic-accent !important;
+}
+
+.tecneplas-current-page > div  > svg > path{
+  fill: $semantic-accent !important;
+}
+
+.tecneplas-current-page{
+  background-color: $semantic-active !important;
+  border-right-style: solid;
+  border-right-width: 2px;
+  border-right-color: $semantic-accent;
+}
+
+.circle {
+  margin-top: 5px !important;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: $white;
+  text-align: center;
+  background: $semantic-accent-active;
+  display: flex;
+}
+
+.sidebar {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  padding: 48px 0 0;
+  box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
+}
+
+.service-sidebar{
+    display: flex;
+    flex-direction: column;
+    /*padding: 48px 0 0;*/
+    //box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
+    /*padding-top: 88px !important;*/
+    height: 100%;
+}
+
+.right-sidebar {
+  position: fixed;
+  top: 0px;
+  bottom: 0;
+  right: 0;
+  z-index: 0;
+  padding: 48px 0 0;
+  box-shadow: inset -1px 0 0 rgb(0 0 0 / 10%);
+  padding-top: 88px !important;
+}
+
+.top-bar{
+  z-index: 1000;
+}
+
+.text-left {
+  text-align: left !important;
+}
+a.active{
+  background-color: transparent !important;
+  border-bottom-color: $semantic-accent !important;
+  border-bottom-width: $border-width-s !important;
+  border-bottom-style: solid !important;
+  border-radius: 0px !important;
+  color: $semantic-accent !important;
+}
+
+.bullet-point{
+  width: 8px;
+  height: 8px;
+  border-radius: $border-radius-sm;
+  float:left;
+  margin: auto;
+}
+.bg-daily-bullet-point{
+  background-color: $semantic-accent-active;
+}
+
+.bg-holiday-bullet-point{
+  background-color: $semantic-success-active;
+}
+
+.bg-on_guard-bullet-point{
+  background-color: $orange;
+}
+
+//CALENDAR
+.fc-toolbar-title{
+  font-size: $font-size-4 !important;
+  font-weight: $font-weight-bold !important;
+  text-transform: capitalize;
+}
+
+.fc-button-primary{
+  background-color: $white !important;
+  border-color: $grey-300 !important;
+  border-radius: $btn-border-radius !important;
+  color: $semantic-accent !important;
+  font-weight: $font-weight-bold !important;
+}
+
+.fc-scrollgrid{
+  background-color: $white;
+}
+
+.fc-scrollgrid > thead{
+  background-color: $body-bg;
+}
+
+.fc-col-header-cell-cushion{
+  color: $grey-500 !important;
+  font-weight: $font-weight-bold !important;
+  font-size: $font-size-2 !important;
+  text-transform: capitalize;
+}
+.fc-daygrid-day-number{
+  color: $black !important;
+  font-size: $font-size-2 !important;
+  width: 100% !important;
+}
+
+.fc-daygrid-day-top{
+  text-align: center !important;
+}
+
+.fc-h-event{
+  border: none !important;
+  border-left: 2px !important;
+  border-left-style: solid !important;
+  border-radius: 0px !important;
+  padding: 0px !important;
+  padding-left: 5px !important;
+  margin: 0px !important;
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.fc-event-title{
+  color: $black !important;
+}
+
+.fc-daygrid-day-frame{
+  cursor: pointer;
+}
+
+.fc-day-today{
+  background-color: transparent !important;
+}
+
+.bg-daily{
+  background-color: $semantic-accent-light !important;
+  border-left: 2px !important;
+  border-left-style: solid !important;
+  border-left-color: $semantic-accent-active !important;
+}
+
+.bg-holiday{
+  background-color: $semantic-success-light !important;
+  border-left: 2px !important;
+  border-left-style: solid !important;
+  border-left-color: $semantic-success-active !important;
+}
+
+.bg-on_guard{
+  background-color: $semantic-warning-light !important;
+  border-left: 2px !important;
+  border-left-style: solid !important;
+  border-left-color: $semantic-warning-active !important;
+}
+
+.bg-daily.fc-spacing-event, .bg-holiday.fc-spacing-event, .bg-on_guard.fc-spacing-event {
+  border-top: none !important;
+  border-right: none !important;
+  border-bottom: none !important;
+  border-radius: 0 !important;
+  padding: 0 !important;
+  padding-left: 5px !important;
+  margin: 0 !important;
+  margin-top: 1px !important;
+  margin-bottom: 1px !important;
+  padding-top: 2px !important;
+  padding-bottom: 2px !important;
+}
+
+.bg-daily .fc-event-time, .bg-holiday .fc-event-time, .bg-on_guard .fc-event-time {
+  color: #1D1D43 !important;
+}
+
+//END CALENDAR
+
+.secuence-card{
+  max-height: 86px;
+  min-height: 86px;
+}
+
+.service-sidebar .active{
+    @extend .tecneplas-current-page;
+    border-bottom: none !important;
+}
+// Bootstrap switch
+
+.service-check:checked {
+  background-color: $green;
+  border-color: $green-300;
+}
+
+.form-switch.form-switch-md {
+  margin-bottom: 1rem;
+}
+
+.form-switch.form-switch-md .form-check-input {
+  height: 1.5rem;
+  width: calc(2rem + 0.75rem);
+  border-radius: 3rem;
+}
+
+.pharmacy-products:hover{
+    text-decoration: underline;
+}
+
+.tecneplas-spinner{
+  display: none;
+}
+
+#pdfContent{
+    height:0;
+    overflow:hidden
+}
+
+.tecneplas-input{
+    max-width: 500px !important;
+    min-width: 350px;
+    margin-left: auto !important;
+    margin-right: 0px !important;
+}
+
+#ngb-live{
+    display: none !important;
+}
+
+.accordion-button:not(.collapsed) {
+  color: rgb(29, 29, 67);
+  background-color: #ffffff;
+  box-shadow: none;
+}
+
+.accordion-button:focus{ 
+  z-index: 3;
+  border-color: transparent;
+  outline: 0;
+  box-shadow: none;
+}
+
+.accordion-button:after {
+  display: none;
+}
+
+.settings-row{
+    margin-left: 0px !important;
+}
+
+// Services configuration
+.input-group-radius, .input-validation-radius {
+  border-top-right-radius: 0.375rem !important;
+  border-bottom-right-radius: 0.375rem !important;
+}
+
+.cdk-drag {
+  z-index:1200 !important;
+}
+
+.help-button{
+    border: 1px solid $black;
+    border-radius: 50%;
+}
+
+.in-width {
+  width: 100%;
+}
+
+@media only screen and (max-width: 600px) {
+  .in-width {
+    width: 50%;
+  }
+
+  .tecneplas-login-form {
+    width: 100%;
+  }
+}

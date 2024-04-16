@@ -1,0 +1,149 @@
+<div class="row bg-white">
+    <div class="col-12 col-lg-5 pt-4 pb-4 ps-4">
+        <h6 i18n>Modelos</h6> <span
+            class="border-start border-secondary border-1 ms-3 ps-3 pt-2 pb-2 my-auto text-secondary fs-12" i18n>Tienes
+            <span class="text-info">{{ productModels.length }} modelos</span> en total</span>
+    </div>
+    <div class="col-12 col-lg-7 pt-2 pb-2 pe-4">
+        <div class="d-table h-100 me-0 ms-lg-auto pe-3">
+            <div class="pe-2 w-auto my-auto d-table-cell align-middle">
+                <input id="typeahead-basic" type="text" class="form-control tecneplas-input" placeholder="Buscar" [(ngModel)]="productModelSearch" (ngModelChange)="filterProductModels($event)" />
+            </div>
+            <div class="my-auto d-table-cell align-middle">
+                <button class="btn-primary btn d-block ms-0 me-0 mx-auto" (click)="newProductType()">
+                    <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd"
+                            d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z"
+                            fill="#FFFFFF" />
+                    </svg>
+                    <span i18n>Añadir modelo</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 ms-4 me-4">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Nombre</h3>
+            </div>
+            <div class="col-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Paneles</h3>
+            </div>
+            <div class="col-4">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Servicios</h3>
+            </div>
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1"></h3>
+            </div>
+        </div>
+        <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 pt-3 pb-3 cursor-pointer" *ngFor="let productModel of productModels">
+            <div class="col-12 col-lg-3 m-auto">
+                <div class="row">
+                    <div class="col-3 d-flex">
+                        <div class="d-flex m-lg-auto rounded bg-body p-3">
+                            <svg class="m-auto" width="16" height="16" viewBox="0 0 16 16" fill="none"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M0 1H1.5V5L4 5V4C4 2.89543 4.89543 2 6 2H14C15.1046 2 16 2.89543 16 4V12C16 13.1046 15.1046 14 14 14H6C4.89543 14 4 13.1046 4 12V11.1002H1.5V15H0V11.1002V9.60017V6.5V5V1ZM1.5 6.5H4V9.60017H1.5V6.5ZM6.5 3.5C5.94772 3.5 5.5 3.94772 5.5 4.5V11.5C5.5 12.0523 5.94772 12.5 6.5 12.5H13.5C14.0523 12.5 14.5 12.0523 14.5 11.5V4.5C14.5 3.94772 14.0523 3.5 13.5 3.5H6.5ZM10.75 11V8.75014H13V7.25014H10.75V5H9.25V7.25014H7V8.75014H9.25V11H10.75Z"
+                                    fill="#6B7394" />
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col-12 col-lg-9">
+                        <h3 class="text-primary fw-bold fs-11 lh-2">
+                            {{ productModel.name }}
+                        </h3>
+                        <p class="text-secondary fs-12 lh-1 mb-1" i18n>Tipo de producto: {{ findProductModelTypeName(productModel.type) }}</p>
+                        <p class="text-secondary fs-12 lh-1 mb-1" i18n>Orla: {{ findProductModelFringeName(productModel.fringe) }}</p>
+                        <p class="text-secondary fs-12 lh-1 mb-0">
+                            <span *ngIf="productModel.bicolor" i18n>Bicolor</span>
+                            <span *ngIf="!productModel.bicolor" i18n>Monocolor</span>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-2 m-auto text-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <p class="mb-0" *ngIf="productModel.top_panel">
+                            <label class="text-secondary fw-bold fs-11 lh-2">Panel superior: </label>
+                            {{ productModel.top_panel.width + 'x' + productModel.top_panel.height }}
+                        </p>
+                        <p class="mb-0" *ngIf="productModel.central_panel">
+                            <label class="text-secondary fw-bold fs-11 lh-2">Panel central: </label>
+                            {{ productModel.central_panel.width + 'x' + productModel.central_panel.height }}
+                        </p>
+                        <p class="mb-0" *ngIf="productModel.bottom_panel">
+                            <label class="text-secondary fw-bold fs-11 lh-2">Panel inferior: </label>
+                            {{ productModel.bottom_panel.width + 'x' + productModel.bottom_panel.height }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-4 m-auto text-primary">
+                <div class="row">
+                    <div class="col-12">
+                        <dl class="row mb-0">
+                            <dt class="col-sm-2">Online:</dt>
+                            <dd class="col-sm-10 mb-0"> 
+                                <ng-container *ngIf="productModel.online_services.length == 0">
+                                    <span>No hay servicios habilitados.</span>
+                                </ng-container>
+                                <ng-container *ngIf="productModel.online_services.length > 0">
+                                    <span *ngFor="let service of productModel.online_services; last as isLast"> {{ service.name | typeAbbreviation }}<span *ngIf="!isLast">,</span><span *ngIf="isLast">.</span></span>
+                                </ng-container>
+                            </dd>
+                        </dl>
+                        <dl class="row mb-0">
+                            <dt class="col-sm-2">Offline:</dt>
+                            <dd class="col-sm-10 mb-0">
+                                <ng-container *ngIf="productModel.offline_services.length == 0">
+                                    <span>No hay servicios habilitados.</span>
+                                </ng-container>
+                                <ng-container *ngIf="productModel.offline_services.length > 0">
+                                    <span *ngFor="let service of productModel.offline_services; last as isLast"> {{ service.name | typeAbbreviation }}<span *ngIf="!isLast">,</span><span *ngIf="isLast">.</span></span>
+                                </ng-container>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-lg-3 m-auto text-primary">
+                <p *ngIf="productModel.countCross > 0">Este modelo no se puede editar/eliminar porqué está asociado a <b>{{ productModel.countCross }}  { productModel.countCross, plural, =1 {panel} other {paneles} }</b>.</p>
+                <div class="btn-group dropdown" *ngIf="productModel.countCross == 0">
+                    <a data-bs-toggle="dropdown" aria-expanded="false" (click)="$event.stopPropagation()">
+                        <div class="btn btn-outline-primary"><i class="bi bi-three-dots-vertical"></i></div>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li class="cursor-pointer"><a class="dropdown-item fw-bold" [routerLink]="['/product-models', productModel._id]" i18n>Editar</a></li>
+                        <li class="cursor-pointer"><a class="dropdown-item text-danger fw-bold" (click)="openDeleteProductModel(deleteActionModal, productModel)" i18n>Eliminar</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- start: Modal for deleting product model -->
+<ng-template #deleteActionModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Eliminar {{productModel.name}}</h6>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <label class="form-label" i18n>Vas a eliminar <b>{{productModel.name}}</b>. Esta acción no se podrá deshacer,
+                    ¿Seguro que quieres continuar?</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer bg-body">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')"
+            i18n>Cancelar</button>
+        <button type="submit" class="btn btn-danger text-light" i18n (click)="removeProductModel()">Eliminar modelo</button>
+    </div>
+</ng-template>
+<!-- end: Modal for deleting product model -->

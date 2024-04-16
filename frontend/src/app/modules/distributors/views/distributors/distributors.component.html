@@ -1,0 +1,86 @@
+<div class="row bg-white">
+    <div class="col-12 col-lg-5 pt-4 pb-4 ps-4">
+        <h6 i18n>Distribuidores</h6> <span class="border-start border-secondary border-1 ms-3 ps-3 pt-2 pb-2 my-auto text-secondary fs-12" i18n>Tienes <span class="text-info"> {{ distributorsCount }} distribuidores</span> en total</span>
+    </div>
+    <div class="col-12 col-lg-7 pt-2 pb-2 pe-4">
+        <div class="d-table h-100 me-0 ms-lg-auto pe-3">
+            <div class="pe-2 w-auto my-auto d-table-cell align-middle">
+                <input id="typeahead-basic" type="text" class="form-control tecneplas-input" placeholder="Buscar" [(ngModel)]="productModel" (ngModelChange)="valuechange($event)"/>
+            </div>
+            <div class="my-auto d-table-cell align-middle">
+                <button class="btn-primary btn d-block ms-0 me-0 mx-lg-auto" [routerLink]="['new']">
+                    <svg class="me-2" width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.6667 5.33335H6.66675V1.33335C6.66675 0.965164 6.36827 0.666687 6.00008 0.666687C5.63189 0.666687 5.33341 0.965164 5.33341 1.33335V5.33335H1.33341C0.965225 5.33335 0.666748 5.63183 0.666748 6.00002C0.666748 6.36821 0.965225 6.66669 1.33341 6.66669H5.33341V10.6667C5.33341 11.0349 5.63189 11.3334 6.00008 11.3334C6.36827 11.3334 6.66675 11.0349 6.66675 10.6667V6.66669H10.6667C11.0349 6.66669 11.3334 6.36821 11.3334 6.00002C11.3334 5.63183 11.0349 5.33335 10.6667 5.33335Z" fill="#FFFFFF"/>
+                    </svg>
+                    <span i18n>Añadir Distribuidor</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row mt-4 ms-2 ms-lg-4 me-2 me-lg-4">
+    <div class="col-12">
+        <div class="row">
+            <div class="col-3">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Nombre</h3>
+            </div>
+            <div class="col-5 col-lg-7">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Direccion</h3>
+            </div>
+            <div class="col-4 col-lg-2">
+                <h3 class="fw-bold text-secondary fs-12 lh-1" i18n>Estado</h3>
+            </div>
+        </div>
+        <div class="row rounded-2 bg-white shadow-lg d-flex ps-0 pe-0 mb-4 pt-3 pb-3" *ngFor="let distributor of distributors">
+            <div class="col-3 m-auto">
+                <div class="row">
+                    <div class="col-3 d-none d-lg-flex">
+                        <div class="d-flex m-auto rounded bg-body p-3">
+                            <svg class="my-auto" width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" clip-rule="evenodd" d="M8.58064 14H14V3.3871C14 2.96788 13.8335 2.56584 13.537 2.26941C13.2406 1.97298 12.8386 1.80645 12.4194 1.80645H8.58064V1.58065C8.58064 1.16143 8.41411 0.759389 8.11769 0.46296C7.82126 0.166532 7.41921 0 7 0H1.58065C1.16143 0 0.759389 0.166532 0.46296 0.46296C0.166532 0.759389 0 1.16143 0 1.58065V14H8.58064ZM8.58064 6.77419H12.6452V9.03226H8.58064V6.77419ZM8.58064 12.6452V10.3871H12.6452V12.6452H8.58064ZM12.4194 3.16129C12.4792 3.16129 12.5367 3.18508 12.579 3.22743C12.6214 3.26977 12.6452 3.32721 12.6452 3.3871V5.41935H8.58064V3.16129H12.4194ZM4.96774 12.6452V11.0645H3.6129V12.6452H1.35484V1.58065C1.35484 1.52076 1.37863 1.46332 1.42098 1.42098C1.46332 1.37863 1.52076 1.35484 1.58065 1.35484H7C7.05989 1.35484 7.11732 1.37863 7.15967 1.42098C7.20202 1.46332 7.22581 1.52076 7.22581 1.58065V12.6452H4.96774ZM4.96775 3.61291H3.61291V4.96775H4.96775V3.61291ZM3.61291 7.22581H4.96775V8.58065H3.61291V7.22581Z" fill="#1D1D43"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <div class="col-9">
+                        <h3 class="text-primary fw-bold fs-11 lh-2 mt-3">
+                            {{distributor?.name}}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="col-5 col-lg-7 text-primary">
+                <span>{{distributor?.address}}</span>
+            </div>
+            <div class="col-4 col-lg-2 m-auto  text-primary">
+                <div class="form-check form-switch">
+                    <input class="form-check-input cursor-pointer" type="checkbox" id="flexSwitchCheckDefault" [attr.checked]="distributor.status ? true : null" (change)="switchStatus($event.target.checked, distributor)">
+                    <span class="me-2">|</span>
+                    <span class="cursor-pointer" (click)="openRemoveDistributor(deleteActionModal, distributor)">
+                        <svg width="28" height="28" viewBox="0 0 22 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" clip-rule="evenodd" d="M4 1.75C4 0.783502 4.7835 0 5.75 0H7.75C8.7165 0 9.5 0.783502 9.5 1.75V2.5H11.25H12.75C13.1642 2.5 13.5 2.83579 13.5 3.25C13.5 3.66421 13.1642 4 12.75 4H11.9634L11.5941 11.3873C11.5209 12.8509 10.3129 14 8.8475 14H4.6525C3.18709 14 1.97911 12.8509 1.90593 11.3873L1.53656 4H0.75C0.335786 4 0 3.66421 0 3.25C0 2.83579 0.335786 2.5 0.75 2.5H2.25H4V1.75ZM5.5 2.5H8V1.75C8 1.61193 7.88807 1.5 7.75 1.5H5.75C5.61193 1.5 5.5 1.61193 5.5 1.75V2.5ZM5.74906 5.71255C5.72838 5.29885 5.37624 4.98025 4.96255 5.00094C4.54885 5.02162 4.23025 5.37376 4.25094 5.78745L4.50094 10.7875C4.52162 11.2011 4.87376 11.5197 5.28745 11.4991C5.70115 11.4784 6.01975 11.1262 5.99906 10.7125L5.74906 5.71255ZM9.24906 5.78745C9.26975 5.37376 8.95115 5.02162 8.53745 5.00094C8.12376 4.98025 7.77162 5.29885 7.75094 5.71255L7.50094 10.7125C7.48025 11.1262 7.79885 11.4784 8.21255 11.4991C8.62624 11.5197 8.97838 11.2011 8.99906 10.7875L9.24906 5.78745Z" fill="black"/>
+                        </svg>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>  
+
+<!-- start: Modal for deleting distributor -->
+<ng-template #deleteActionModal let-modal>
+    <div class="modal-header">
+        <h6 class="modal-title" id="modal-basic-title" i18n>Eliminar distribuidor</h6>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12 mb-3">
+                <label class="form-label" i18n>Quiere eliminar el distribuidor?</label>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer bg-body">
+        <button type="button" class="btn btn-outline-primary me-auto" (click)="modal.dismiss('Close button click')" i18n>Cancelar</button>
+        <button type="submit" class="btn btn-danger text-light" i18n (click)="removeDistributor()">Eliminar</button>
+    </div>
+</ng-template>
+<!-- end: Modal for deleting distributor -->

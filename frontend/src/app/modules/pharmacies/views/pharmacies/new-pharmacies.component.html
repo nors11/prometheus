@@ -1,0 +1,187 @@
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 min-vh-100 p-0 d-md-block sidebar collapse bg-white">
+            
+            <div class="d-flex pt-4 pb-4">
+                <a class="navbar-brand ms-5" [routerLink]="['/products']">
+                    <img class="m-auto" src="assets/img/tecneplas-brand.svg" width="160">
+                </a>
+            </div>
+            
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link p-0" aria-current="page"  [ngClass]="{'tecneplas-current-page': currentWizardNumber === 0}">
+                            <div class="pt-3 pb-3 ms-5">
+                                1
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>General</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-0" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 1}">
+                            <div class="pt-3 pb-3 ms-5">
+                                2
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Dirección </span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-0" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 2}">
+                            <div class="pt-3 pb-3 ms-5">
+                                3
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Contacto </span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item" *ngIf="user.role != userRole.distributor">
+                        <a class="nav-link p-0" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 3}">
+                            <div class="pt-3 pb-3 ms-5">
+                                4
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Distribuidor </span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <main class="col-md-9 ms-sm-auto col-lg-10">
+            <div class="text-end m-4">
+                <a class="text-primary" [routerLink]="['/pharmacies']">
+                    <i class="bi bi-x-circle fs-1"></i>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-1"></div>
+                <div class="col-md-6">
+                    <div class="mt-5">
+                        <div *ngIf="currentWizardNumber === 0">
+                            <form #generalNgForm="ngForm" [formGroup]="generalForm" (ngSubmit)="generalNgForm.form.valid && submitGeneralForm()">
+                                    <h5 i18n>Nuevo farmacia</h5>
+                                    <p class="fs-10" i18n>Para empezar, añade los siguientes datos</p>
+
+                                    <div class="col">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Nombre farmacia</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="name" [ngClass]="[generalNgForm.submitted && generalForm.controls.name.errors?.required ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="generalForm.controls.name.errors?.required" i18n>Debe introducir un nombre</div>
+                                    </div>
+
+                                    <div class="col mt-4 mb-4">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>NIF</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="nif" [ngClass]="[generalNgForm.submitted && generalForm.controls.nif.errors?.required ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="generalForm.controls.nif.errors?.required" i18n>Debe introducir una dirección</div>
+                                    </div>
+
+                                    <button class="mt-1 btn btn-lg btn-outline-primary me-2" disabled i18n>Atrás</button>
+                                    <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+
+                        <div *ngIf="currentWizardNumber === 1">
+                            <form #addressNgForm="ngForm" [formGroup]="addressForm" (ngSubmit)="addressNgForm.form.valid && submitAddressForm()">
+                                <h5 i18n>Dirección</h5>
+                                <p class="fs-10" i18n>Introduce la dirección en la que está situada la farmacia. 
+                                    La necesitaremos para saber qué distribuidor asignarle.</p>
+
+                                <div class="row mb-4">
+                                    <div class="col-8">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Nombre de la calle</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="street_name" [ngClass]="[addressNgForm.submitted && addressForm.controls.street_name.errors?.required ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="addressForm.controls.street_name.errors?.required" i18n>Debe introducir un nombre de la calle</div>
+                                    </div>
+                                    <div class="col-4">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Número</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="number" [ngClass]="[addressNgForm.submitted && addressForm.controls.number.errors?.required ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="addressForm.controls.number.errors?.required" i18n>Debe introducir un número</div>
+                                    </div>
+                                </div>
+
+                                <div class="row mb-4">
+                                    <div class="col-4">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Código Postal</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="zip" [ngClass]="[addressNgForm.submitted && addressForm.controls.zip.errors?.required ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="addressForm.controls.zip.errors?.required" i18n>Debe introducir un código postal</div>
+                                    </div>
+                                    <div class="col-8">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Ciudad</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="city" [ngClass]="[addressNgForm.submitted && addressForm.controls.city.errors?.required ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="addressForm.controls.city.errors?.required" i18n>Debe introducir una ciudad</div>
+                                    </div>
+                                </div>
+
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" (click)="previousCurrentWizard()" i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+
+                        <div *ngIf="currentWizardNumber === 2">
+                            <form #contactNgForm="ngForm" [formGroup]="contactForm" (ngSubmit)="contactNgForm.form.valid && submitContactForm()">
+                                <h5 i18n>Contacto</h5>
+                                <p class="fs-10" i18n>Introducto los datos de contacto de la farmacia.</p>
+
+                                <div class="col">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Correo electrónico</label>
+                                    <input type="text" class="form-control form-control-lg" required formControlName="email" [ngClass]="[contactNgForm.submitted && contactForm.controls.email.errors?.required ? 'is-invalid' : '' || contactForm.controls.email.errors?.invalidEmail ? 'is-invalid' : '']">
+                                    <div class="invalid-feedback" *ngIf="contactForm.controls.email.errors?.required" i18n>Debe introducir un correo electrónico</div>
+                                    <div class="invalid-feedback" *ngIf="contactForm.controls.email.errors?.invalidEmail" i18n>Correo registrado.</div>
+                                </div>
+
+                                <div class="col mt-4 mb-4">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Teléfono</label>
+                                    <input type="text" class="form-control form-control-lg" required formControlName="phone" [ngClass]="[contactNgForm.submitted && contactForm.controls.phone.errors?.required ? 'is-invalid' : '']">
+                                    <div class="invalid-feedback" *ngIf="contactForm.controls.phone.errors?.required" i18n>Debe introducir un teléfono</div>
+                                </div>
+
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" (click)="previousCurrentWizard()" i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+
+                        <div *ngIf="currentWizardNumber === 3">
+                            <form #distributorNgForm="ngForm" [formGroup]="distributorForm" (ngSubmit)="distributorNgForm.form.valid && submitDistributorForm()">
+                                <h5 i18n>Asignar distribuidor</h5>
+                                <p class="fs-10" i18n>Por último, asígnale un distribuidor a esta farmacia ubicada en:</p>
+
+                                <div style="background: #FAFAFA;border-radius: 8px;" class="p-3 mb-4">
+                                    <p class="fs-10" style="margin-bottom: 0px;">
+                                        <svg width="12" height="14" viewBox="0 0 12 14" fill="none" xmlns="http://www.w3.org/2000/svg" style="margin-right: 15px;">
+                                            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.97207 13.3583C8.67063 12.1493 12 9.35211 12 6C12 2.68629 9.31371 0 6 0C2.68629 0 0 2.68629 0 6C0 9.35211 3.32937 12.1493 5.02793 13.3583C5.61528 13.7763 6.38472 13.7763 6.97207 13.3583ZM6 8C7.10457 8 8 7.10457 8 6C8 4.89543 7.10457 4 6 4C4.89543 4 4 4.89543 4 6C4 7.10457 4.89543 8 6 8Z" fill="black"/>
+                                        </svg>
+                                        <span class="ml-2">{{pharmacyAddressInfo}}</span>
+                                    </p>
+                                </div>
+
+                                <div class="col mb-4">
+                                    <input id="typeahead-focus"  type="text" class="form-control"
+                                        [inputFormatter]="formatter"
+                                        [resultFormatter]="formatter"
+                                        formControlName="id_distributor"
+
+                                        [(ngModel)]="model"
+                                        [ngbTypeahead]="search"
+                                        (focus)="focus$.next($any($event).target.value)"
+                                        (click)="click$.next($any($event).target.value)"
+                                        #instance="ngbTypeahead"
+                                    />
+                                    <div class="invalid-feedback" *ngIf="distributorForm.controls.id_distributor.errors?.required">Debe introducir un correo electrónico</div>
+                                </div>
+
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" (click)="previousCurrentWizard()" i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+
+                        <div *ngIf="currentWizardNumber === 4" class="text-center">
+                            <p><i class="bi bi-check2 h1 text-success"></i></p>
+                            <p class="fs-10 mb-5 mt-5" i18n>¡Perfecto! Has añadido la {{pharmacy.name}} a tu lista de farmacias.</p>
+    
+                            <button type="button" class="btn btn-lg btn-primary w-75" [routerLink]="['/pharmacies']" i18n>Volver al listado de farmacias</button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</div>

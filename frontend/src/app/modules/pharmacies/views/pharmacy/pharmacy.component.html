@@ -1,0 +1,49 @@
+<div class="bg-white ps-5 pe-5">
+    <div class="row">
+        <div class="col-12 d-flex ps-4">
+            <a *ngIf="user.role != userRole.pharmacy" class="text-primary float-start my-auto"
+                [routerLink]="['/pharmacies']"><i class="bi bi-arrow-left-circle fs-1"></i></a>
+            <a *ngIf="user.role == userRole.pharmacy" data-bs-toggle="dropdown" aria-expanded="false" class="cursor-pointer">
+                <h1 class="fs-10 fw-bold m-0 ps-2 float-start text-primary"><span i18n>{{ pharmacy?.name }}</span></h1>
+            </a>
+            <a *ngIf="user.role != userRole.pharmacy">
+                <h1 class="fs-10 fw-bold m-0 ps-2 float-start text-primary"><span i18n>{{ pharmacy?.name }}</span></h1>
+            </a>
+            <ul *ngIf="user.role == userRole.pharmacy" class="dropdown-menu ms-4" aria-labelledby="dropdownMenuLink">
+                <li><a class="dropdown-item" href="#" i18n>Editar</a></li>
+                <li><a class="dropdown-item" href="#" i18n>Ajustes</a></li>
+                <li><a class="dropdown-item" href="#" (click)="logout()" i18n>Logout</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="rowsList">
+    <div class="col-12 col-sm-12 col-md-12	col-lg-12 col-xl-12 col-xxl-12">
+        <div class="bg-white ps-5 pe-5">
+            <ul ngbNav #nav="ngbNav" [(activeId)]="activeTabPharmacy" class="nav nav-pills">
+                <li ngbNavItem="products">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('products')" i18n>
+                        <i class="bi bi-calendar3-week pe-2"></i>Productos
+                    </a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-body">
+                            <tecneplas-products *ngIf="pharmacy" [pharmacy]="pharmacy"></tecneplas-products>
+                        </div>
+                    </ng-template>
+                </li>
+                <li ngbNavItem="team">
+                    <a class="text-secondary fw-bold" ngbNavLink (click)="saveTab('team')" i18n><i
+                            class="bi bi-calendar3 pe-2"></i>Equipos</a>
+                    <ng-template ngbNavContent>
+                        <div class="bg-body">
+                            <tecneplas-users *ngIf="pharmacy" [pharmacy]="pharmacy"></tecneplas-users>
+                        </div>
+                    </ng-template>
+                </li>
+            </ul>
+        </div>
+
+        <div [ngbNavOutlet]="nav" class="bg-body"></div>
+    </div>
+</div>

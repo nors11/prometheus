@@ -1,0 +1,181 @@
+<div class="container-fluid">
+    <div class="row">
+        <nav class="col-md-3 col-lg-2 min-vh-100 p-0 d-md-block sidebar collapse bg-white">
+            
+            <div class="d-flex pt-4 pb-4">
+                <a class="navbar-brand ms-5" [routerLink]="['/products']">
+                    <img class="m-auto" src="assets/img/tecneplas-brand.svg" width="160">
+                </a>
+            </div>
+            
+            <div class="position-sticky pt-3">
+                <ul class="nav flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link p-0" aria-current="page" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 0}">
+                            <div class="pt-3 pb-3 ms-5">
+                                1
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Datos del producto</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-0" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 1}">
+                            <div class="pt-3 pb-3 ms-5">
+                                2
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Datos del contrato</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link p-0" [ngClass]="{'tecneplas-current-page': currentWizardNumber === 2}">
+                            <div class="pt-3 pb-3 ms-5">
+                                3
+                                <span class="text-secondary fw-bold fs-11 lh-2 ps-2 m-auto" i18n>Servicios externos</span>
+                            </div>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <main class="col-md-9 ms-sm-auto col-lg-12">
+            <div class="text-end m-4">
+                <a class="text-primary" [routerLink]="['/products']">
+                    <i class="bi bi-x-circle fs-1"></i>
+                </a>
+            </div>
+            <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="mt-5">
+                        <div *ngIf="currentWizardNumber === 0">
+                            <h5 i18n>Nuevo producto</h5>
+                            <p class="fs-10" i18n>Para empezar, añade los siguientes datos</p>
+                            <form #productNgForm="ngForm" [formGroup]="productForm" (ngSubmit)="submitProductForm()">
+
+                                <div class="mt-5 text-left form-group">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Tipo de producto</label>
+                                    <select class="form-select form-select-lg" aria-label="Tipo de producto" formControlName="type">
+                                        <option *ngFor="let productType of productTypes" [value]="productType.id">{{ productType.name }}</option>
+                                    </select>
+                                </div>
+
+                                <div class="mt-4 mb-4 col">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Nombre</label>
+                                    <input type="text" class="form-control form-control-lg" required formControlName="name" [ngClass]="[productNgForm.submitted && productForm.controls.name.errors?.required ? 'is-invalid' : '']">
+                                    <div class="invalid-feedback" *ngIf="productForm.controls.name.errors?.required" i18n>Debe introducir un nombre</div>
+                                </div>
+
+                                <div class="row mt-4">
+                                    <div class="col">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>SSID</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="ssid" [ngClass]="[productNgForm.submitted && productForm.controls.ssid.errors?.required ? 'is-invalid' : '' || productForm.controls.ssid.errors?.invalidSsid ? 'is-invalid' : '' || productForm.controls.ssid.errors?.pattern ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="productForm.controls.ssid.errors?.required" i18n>Debe introducir un ssid</div>
+                                        <div class="invalid-feedback" *ngIf="productForm.controls.ssid.errors?.invalidSsid" i18n>Numero de ssid en uso</div>
+                                        <div class="invalid-feedback" *ngIf="productForm.controls.ssid.errors?.pattern" i18n>Numero de ssid inválido</div>
+                                    </div>
+                                    <div class="col">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Matricula</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="number_plate" [ngClass]="[productNgForm.submitted && productForm.controls.number_plate.errors?.required ? 'is-invalid' : '' || productForm.controls.number_plate.errors?.invalidNumberPlate ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="productForm.controls.number_plate.errors?.required" i18n>Debe introducir un numero de matricula</div>
+                                        <div class="invalid-feedback" *ngIf="productForm.controls.number_plate.errors?.invalidNumberPlate" i18n>Numero de placa en uso</div>
+                                    </div>
+                                </div>
+
+                                <div class="mt-4 mb-4 text-left form-group">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Modelo</label>
+                                    <select class="form-select form-select-lg" aria-label="Default select example" formControlName="model" [ngClass]="[productNgForm.submitted && productForm.controls.model.errors?.required ? 'is-invalid' : '']">
+                                        <option  [value]="null" i18n>Seleccionar modelo...</option>
+                                        <option *ngFor="let model of productModels" [value]="model._id"> {{ model.name }}</option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="productForm.controls.model.errors?.required" i18n>Debe introducir un modelo</div>
+                                </div>
+
+                                <div class="mt-4 mb-4 text-left form-group">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="connectivity" (change)="toggleWifi($event.target.checked)" formControlName="connectivity">
+                                        <label class="form-check-label" for="connectivity" i18n>Conexión wifi</label>
+                                    </div>
+                                </div>
+
+                                <div class="row mt-4 mb-4">
+                                    <div class="col">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>SSID WiFi</label>
+                                        <input type="text" class="form-control form-control-lg" required formControlName="wifiSSID" [ngClass]="[productNgForm.submitted && productForm.controls.wifiSSID.errors?.required ? 'is-invalid' : ''|| productForm.controls.wifiSSID.errors?.invalidSsid ? 'is-invalid' : '']">
+                                        <div class="invalid-feedback" *ngIf="productForm.controls.wifiSSID.errors?.required" i18n>Debe introducir un SSID WiFi</div>
+                                    </div>
+                                    <div class="col">
+                                        <label class="text-secondary fw-bold fs-11 lh-2" i18n>Contraseña</label>
+                                        <input type="password" class="form-control form-control-lg" formControlName="password" [ngClass]="[productNgForm.submitted && productForm.controls.password.errors?.required ? 'is-invalid' : '' || productForm.controls.password.errors?.invalidNumberPlate ? 'is-invalid' : '']">
+                                    </div>
+                                </div>
+                                
+                                <div class="mt-4 mb-4 text-left form-group">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Idioma</label>
+                                    <select class="form-select form-select-lg" aria-label="Default select example" formControlName="language" [ngClass]="[productNgForm.submitted && productForm.controls.language.errors?.required ? 'is-invalid' : '']">
+                                        <option *ngFor="let lang of language | keyvalue: originalOrder; let i = index;" value="{{lang.value}}" i18n>{{lang.value | languageAbbreviation}}</option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="productForm.controls.language.errors?.required" i18n>Debe introducir un idioma</div>
+                                </div>
+                
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" disabled i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+                    
+                        <div *ngIf="currentWizardNumber === 1">
+                            <h5 i18n>Datos del contrato</h5>
+                            <p class="fs-10" i18n>Selecciona la farmacia que ha contratado el producto y el tipo de contrato elegido.</p>
+                            <form #contractNgForm="ngForm" [formGroup]="contractForm" (ngSubmit)="contractNgForm.form.valid && submitContractForm()">
+                                <div class="mt-4 mb-4 text-left form-group" *ngIf="!pharmacy">
+                                    <label class="text-secondary fw-bold fs-11 lh-2" i18n>Contratado por</label>
+                                    <select class="form-select form-select-lg" aria-label="Default select example" formControlName="id_pharmacy" [ngClass]="[contractNgForm.submitted && contractForm.controls.id_pharmacy.errors?.required ? 'is-invalid' : '']">
+                                        <option [value]="null" i18n>Seleccione...</option>
+                                        <option *ngFor="let pharmacy of pharmacies" [value]="pharmacy._id">{{pharmacy.name}}</option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="contractForm.controls.id_pharmacy.errors?.required" i18n>Debe introducir una farmacia</div>
+                                </div>
+    
+                                <div class="mt-4 mb-4 text-left form-group">
+                                    <p class="text-secondary fw-bold fs-11 lh-2" [ngClass]="[contractNgForm.submitted && contractForm.controls.contract.errors?.required ? 'is-invalid' : '']" i18n>Tipo de contrato</p>
+                                    <button type="button" class="btn btn-lg me-2" style="width: 48%;" [ngClass]="{'btn-primary': currentContractType === 'full', 'btn-outline-primary' : currentContractType != 'full' }" (click)="contratType('full')" i18n>Full</button>
+                                    <button type="button" class="btn btn-lg w-50" [ngClass]="{'btn-primary': currentContractType === 'limited', 'btn-outline-primary' : currentContractType != 'limited' }" (click)="contratType('limited')" i18n>Limitado</button>
+                                    <div class="invalid-feedback" *ngIf="contractForm.controls.contract.errors?.required" i18n>Debe introducir un tipo de contrato</div>
+                                </div>
+                                
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" (click)="previousCurrentWizard()" i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Continuar</button>
+                            </form>
+                        </div>
+
+                        <div *ngIf="currentWizardNumber === 2">
+                            <h5 i18n>Servicios externos</h5>
+                            <p class="fs-10" *ngIf="modelServices.length > 0" i18n>Selecciona los servicios externos online a los que podrá conectarse este producto.</p>
+                            <p class="fs-10" *ngIf="modelServices.length == 0" i18n>No existen servicios online para vincular a este producto.</p>
+                            <form #serviceNgForm="ngForm" [formGroup]="serviceForm" (ngSubmit)="serviceNgForm.form.valid && submitServiceForm()">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3" *ngFor="let service of modelServices">
+                                        <button type="button" class="btn btn-lg me-2 w-100" (click)="addService(service)" [ngClass]="{'btn-primary': service.status === 'active', 'btn-outline-primary' : service.status === 'descative', 'btn-outline-primary' : !service.status }">{{service?.name | typeAbbreviation}}</button>
+                                    </div>
+                                </div>
+    
+                                <button class="mt-1 btn btn-lg btn-outline-primary me-2" (click)="previousCurrentWizard()" i18n>Atrás</button>
+                                <button class="mt-1 btn btn-lg btn-primary" type="submit" i18n>Añadir producto</button>
+                            </form>
+                        </div>
+                        <div class="text-center" *ngIf="currentWizardNumber === 3">
+                            <p ><i class="bi bi-check2 h1 text-success"></i></p>
+                            <p class="fs-10 mb-4 mt-4" i18n>¡Perfecto! Has añadido el producto {{newCross.newCross.name}} a la {{newCross.pharmacy.name}}.</p>
+
+                            <button type="button" class="btn btn-lg btn-primary w-50 mt-4" [routerLink]="['/cross', newCross.newCross._id ]" i18n>Ver producto</button>
+
+                            <p class="mt-5" i18n>O si lo prefieres puedes:</p>
+                            <button *ngIf="!pharmacy" type="button" class="btn btn-lg btn-primary w-50" [routerLink]="['/products']" i18n>Volver al listado de productos</button>
+                            <button *ngIf="pharmacy" type="button" class="btn btn-lg btn-primary w-50" (click)="navToProducts()" i18n>Volver al listado de productos</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+        </main>
+    </div>
+</div>
